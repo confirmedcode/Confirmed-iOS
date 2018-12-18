@@ -251,8 +251,13 @@ class PostboardingViewController: BWWalkthroughViewController, BWWalkthroughView
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                let addEmail = self.controllers.last as! AddEmailViewController
-                addEmail.emailTextField?.becomeFirstResponder()
+                if let addEmail = self.controllers.last as? AddEmailViewController {
+                    addEmail.emailTextField?.becomeFirstResponder()
+                }
+                else {
+                    NotificationCenter.post(name: .dismissOnboarding)
+                }
+                
             }
         }
         

@@ -9,6 +9,7 @@ import UIKit
 import MessageUI
 import CocoaLumberjackSwift
 import Alamofire
+import PopupDialog
 
 open class ConfirmedBaseViewController: UIViewController, MFMailComposeViewControllerDelegate {
 
@@ -48,16 +49,21 @@ open class ConfirmedBaseViewController: UIViewController, MFMailComposeViewContr
     }
     
     @objc func signoutUser() {
+        let title = "CLEAR ALL DATA?"
+        let message = "Would you like to clear your VPN credentials and sign out of your account?"
         
-        let alert = UIAlertController(title: "Clear All Data?", message: "Would you like to clear your VPN credentials and sign out of your account?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+        let popup = PopupDialog(title: title, message: message, image: nil, buttonAlignment: .horizontal)
+        
+        
+        let acceptButton = DefaultButton(title: "YES", dismissOnTap: true) {
             Auth.clearCookies()
             Auth.signoutUser()
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsSubscription.TunnelsNotSubscribed), object: nil)
-        }))
+        }
+        let cancelButton = DefaultButton(title: "CANCEL", dismissOnTap: true) { }
+        popup.addButtons([cancelButton, acceptButton])
         
-        self.present(alert, animated: true)
+        self.present(popup, animated: true, completion: nil)
         
     }
     

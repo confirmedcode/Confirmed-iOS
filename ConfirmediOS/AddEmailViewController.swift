@@ -7,6 +7,7 @@
 
 import UIKit
 import TextFieldEffects
+import PopupDialog
 
 class AddEmailViewController: ConfirmedBaseViewController {
 
@@ -22,22 +23,15 @@ class AddEmailViewController: ConfirmedBaseViewController {
     }
     
     func showInfoMessage(infoString : String) {
-        let appearance = SCLAlertView.SCLAppearance(
-            kCircleBackgroundTopPosition: -100,
-            kTitleTop: 50,
-            //kWindowHeight: 240,
-            //kTextFieldHeight: 160,
-            //kButtonHeight: 28,
-            kTitleFont: UIFont(name: "AvenirNext-Regular", size: 20)!,
-            kTextFont: UIFont(name: "AvenirNext-Regular", size: 14)!,
-            kButtonFont: UIFont(name: "AvenirNext-Regular", size: 14)!,
-            showCloseButton: true
-        )
+        let title = "ONE MORE THING..."
+        let message = infoString
         
-        let alertView = SCLAlertView(appearance: appearance)
-        alertView.yOffset = 100
-        alertView.textViewToButtonPadding = 20
-        alertView.showInfo("One More Thing...", subTitle:infoString, closeButtonTitle:"OK")
+        let popup = PopupDialog(title: title, message: message, image: nil, transitionStyle: .zoomIn, hideStatusBar: false)
+        
+        let acceptButton = DefaultButton(title: "OK", dismissOnTap: true) { }
+        popup.addButtons([acceptButton])
+        
+        self.present(popup, animated: true, completion: nil)
         
         NotificationCenter.post(name: .dismissOnboarding)
         self.dismiss(animated: true, completion: {})
@@ -52,10 +46,14 @@ class AddEmailViewController: ConfirmedBaseViewController {
     
     func showErrorMessage(errorString : String) {
         
-        let alertView = SCLAlertView(appearance: defaultAlertAppearance)
-        alertView.yOffset = 100
-        alertView.textViewToButtonPadding = 20
-        alertView.showError("Hold On...".localized(), subTitle:errorString, closeButtonTitle:"OK")
+        let title = "ERROR SIGNING UP"
+        let message = errorString
+        let popup = PopupDialog(title: title, message: message, image: nil, transitionStyle: .zoomIn, hideStatusBar: false)
+        
+        let acceptButton = DefaultButton(title: "OK", dismissOnTap: true) { }
+        popup.addButtons([acceptButton])
+        
+        self.present(popup, animated: true, completion: nil)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
             //self.createSigninButton?.normalCornerRadius = 4
@@ -92,7 +90,7 @@ class AddEmailViewController: ConfirmedBaseViewController {
         let password = self.passwordTextField?.text
         
         if (!Utils.isValidEmail(emailAddress: email!) || email == nil) || (password == nil || password!.count < 8) {
-            showErrorMessage(errorString: "Please make sure to enter a valid e-mail and at least eight characters for your password.")
+            showErrorMessage(errorString: "Please make sure to enter a valid e-mail and a password that contains at least eight characters, a capital letter, a number, and a special character.")
             
             return
         }
@@ -111,7 +109,7 @@ class AddEmailViewController: ConfirmedBaseViewController {
     }
     
     override var prefersStatusBarHidden : Bool {
-        return true
+        return false
     }
     
     override func didReceiveMemoryWarning() {

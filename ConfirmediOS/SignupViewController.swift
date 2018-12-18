@@ -231,18 +231,16 @@ class SignupViewController: ConfirmedBaseViewController {
         let page_zero = stb.instantiateViewController(withIdentifier: "postboarding1")
         let page_one = stb.instantiateViewController(withIdentifier: "contentBlocker") as! ContentBlockerViewController
         let page_two = stb.instantiateViewController(withIdentifier: "whitelisting") as! WhitelistingViewController
-        let page_three = stb.instantiateViewController(withIdentifier: "walk4")
-        let page_four = stb.instantiateViewController(withIdentifier: "addEmail") as! AddEmailViewController
+        let page_three = stb.instantiateViewController(withIdentifier: "addEmail") as! AddEmailViewController
         page_one.isPostboarding = true
         page_two.isPostboarding = true
-        page_four.isPostboarding = true
+        page_three.isPostboarding = true
         
         // Attach the pages to the master
         walkthrough.add(viewController:page_zero)
         walkthrough.add(viewController:page_one)
         walkthrough.add(viewController:page_two)
         walkthrough.add(viewController:page_three)
-        walkthrough.add(viewController:page_four)
         //walkthrough.view.bringSubview(toFront: walkthrough.scrollview)
         walkthrough.modalTransitionStyle = .crossDissolve
 

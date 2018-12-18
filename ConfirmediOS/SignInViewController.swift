@@ -9,6 +9,7 @@ import UIKit
 import TextFieldEffects
 import SwiftyStoreKit
 import CocoaLumberjackSwift
+import NetworkExtension
 
 class SignInViewController: ConfirmedBaseViewController {
 
@@ -135,6 +136,27 @@ class SignInViewController: ConfirmedBaseViewController {
         UIApplication.shared.open(URL(string: Global.forgotPasswordURL)!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     
+    func showPostboarding() {
+        let stb = UIStoryboard(name: "Main", bundle: nil)
+        let walkthrough = stb.instantiateViewController(withIdentifier: "postboarding") as! BWWalkthroughViewController
+        
+        let page_zero = stb.instantiateViewController(withIdentifier: "postboarding1")
+        let page_one = stb.instantiateViewController(withIdentifier: "contentBlocker") as! ContentBlockerViewController
+        let page_two = stb.instantiateViewController(withIdentifier: "whitelisting") as! WhitelistingViewController
+        page_one.isPostboarding = true
+        page_two.isPostboarding = true
+        
+        // Attach the pages to the master
+        walkthrough.add(viewController:page_zero)
+        walkthrough.add(viewController:page_one)
+        walkthrough.add(viewController:page_two)
+        //walkthrough.view.bringSubview(toFront: walkthrough.scrollview)
+        walkthrough.modalTransitionStyle = .crossDissolve
+        
+        self.modalTransitionStyle = .crossDissolve
+        self.present(walkthrough, animated: true, completion: nil)
+    }
+    
     @IBAction func signInUser() {
         self.signinButton?.isUserInteractionEnabled = false
         self.signinButton?.startLoadingAnimation()
@@ -165,9 +187,18 @@ class SignInViewController: ConfirmedBaseViewController {
                             refreshITunesIfNeeded: false,
                             isSubscribed:
                             {
-                                NotificationCenter.post(name: .dismissOnboarding)
+                                var shouldShowPostboarding = true
+                                if NEVPNManager.shared().connection.status != .invalid {
+                                    shouldShowPostboarding = false
+                                }
                                 
-                                self.dismiss(animated: true, completion: nil)
+                                if shouldShowPostboarding {
+                                    self.showPostboarding()
+                                }
+                                else {
+                                    NotificationCenter.post(name: .dismissOnboarding)
+                                    self.dismiss(animated: true, completion: nil)
+                                }
                         },
                             isNotSubscribed:
                             {

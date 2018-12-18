@@ -20,6 +20,7 @@ target :'Confirmed VPN' do
     pod 'Segmentio'
     pod 'NVActivityIndicatorView'
     pod 'CocoaLumberjack'
+    pod 'PopupDialog', '~> 0.9'
 end
 
 
