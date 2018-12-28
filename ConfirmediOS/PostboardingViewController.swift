@@ -46,7 +46,7 @@ class PostboardingViewController: BWWalkthroughViewController, BWWalkthroughView
             if self.currentPage == 0 {
                 let manager = NEVPNManager.shared()
                 manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-                    if manager.connection.status == .connected {
+                    if manager.connection.status == .connected || manager.connection.status == .connecting {
                         //advance with animation
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {

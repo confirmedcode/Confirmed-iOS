@@ -66,25 +66,6 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
                 cell.planText?.text = planDescription
                 return cell
             }
-            if indexPath.row == 2 {
-                if isAllDevicesPlan() && isMonthlyPlan() {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "UpgradeAnnualCell") as! AccountUpgradeCell
-                    cell.planUpgrade?.addTarget(self, action: #selector(upgradeToAnnualAllDevices), for: .touchUpInside)
-                    return cell
-                }
-                else {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "UpgradePlanCell") as! AccountUpgradeCell
-                    cell.planUpgrade?.addTarget(self, action: #selector(upgradeToAllDevices), for: .touchUpInside)
-                    return cell
-                }
-                
-            }
-            if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "UpgradeAnnualCell") as! AccountUpgradeCell
-                cell.planUpgrade?.addTarget(self, action: #selector(upgradeToAnnualiOSDevices), for: .touchUpInside)
-                return cell
-            }
-            
         }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SignoutCell") as! AccountSignoutCell
@@ -100,17 +81,7 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
         }
         
         if section == 1 {
-            if isMonthlyPlan() && isAllDevicesPlan() {
-                return 3
-            }
-            
-            if isMonthlyPlan() && isIOSPlan() { //only show upgrade plan for ios-monthly
-                return 4
-            }
-            
-            if !isMonthlyPlan() && !isIOSPlan() { //don't show upgrade plan for ios annual
-                return 2
-            }
+            return 2
         }
         
         return 2

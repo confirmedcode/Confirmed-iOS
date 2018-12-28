@@ -1802,13 +1802,13 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HDP-bQ-VFf">
-                                                                    <rect key="frame" x="30" y="0.0" width="165.5" height="74.5"/>
+                                                                    <rect key="frame" x="30" y="0.0" width="307" height="74.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" tag="500" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="team@confirmedvpn.com" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NYs-1f-By4">
-                                                                    <rect key="frame" x="11.5" y="0.0" width="372.5" height="74.5"/>
+                                                                    <rect key="frame" x="47" y="0.0" width="691" height="74.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <nil key="highlightedColor"/>
@@ -1841,13 +1841,13 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wtx-yP-jGA">
-                                                                    <rect key="frame" x="30" y="0.0" width="165.5" height="74.5"/>
+                                                                    <rect key="frame" x="30" y="0.0" width="307" height="74.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f2i-dV-64I">
-                                                                    <rect key="frame" x="184" y="0.0" width="200" height="74.5"/>
+                                                                    <rect key="frame" x="538" y="0.0" width="200" height="74.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="200" id="HsY-z1-Nl4"/>
                                                                     </constraints>
@@ -1882,13 +1882,13 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GoC-c8-4Ib">
-                                                                    <rect key="frame" x="30" y="0.0" width="165.5" height="74.5"/>
+                                                                    <rect key="frame" x="30" y="0.0" width="307" height="74.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" tag="500" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPM-ls-bhY">
-                                                                    <rect key="frame" x="11.5" y="0.0" width="372.5" height="74.5"/>
+                                                                    <rect key="frame" x="47" y="0.0" width="691" height="74.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <nil key="highlightedColor"/>
@@ -1922,13 +1922,13 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PIq-cK-jjA">
-                                                                    <rect key="frame" x="30" y="0.0" width="165.5" height="89.5"/>
+                                                                    <rect key="frame" x="30" y="0.0" width="307" height="89.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" tag="500" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8N-gv-hMv">
-                                                                    <rect key="frame" x="177" y="0.0" width="207" height="89.5"/>
+                                                                    <rect key="frame" x="354" y="0.0" width="384" height="89.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <nil key="highlightedColor"/>
@@ -1962,13 +1962,13 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fnz-ZP-M8f">
-                                                                    <rect key="frame" x="30" y="0.0" width="165.5" height="119.5"/>
+                                                                    <rect key="frame" x="30" y="0.0" width="307" height="119.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JzC-HQ-N0r">
-                                                                    <rect key="frame" x="184" y="0.0" width="200" height="36"/>
+                                                                    <rect key="frame" x="538" y="0.0" width="200" height="36"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="36" id="jDh-3e-JfC"/>
                                                                         <constraint firstAttribute="width" constant="200" id="lZY-02-2C7"/>
@@ -1982,7 +1982,7 @@
                                                                     </variation>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Confirmed on Mac, PC, and Android too for only $9.99 a month" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNP-CM-Axq">
-                                                                    <rect key="frame" x="184" y="20" width="200" height="90"/>
+                                                                    <rect key="frame" x="538" y="20" width="200" height="90"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -2018,13 +2018,13 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5en-s8-3Z6">
-                                                                    <rect key="frame" x="30" y="0.0" width="165.5" height="119.5"/>
+                                                                    <rect key="frame" x="30" y="0.0" width="307" height="119.5"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ng-qK-etN">
-                                                                    <rect key="frame" x="184" y="20" width="200" height="37"/>
+                                                                    <rect key="frame" x="538" y="20" width="200" height="37"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="37" id="1IP-lV-6q4"/>
                                                                         <constraint firstAttribute="width" constant="200" id="xW0-YO-f5g"/>
@@ -2038,7 +2038,7 @@
                                                                     </variation>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upgrade Confirmed to an Annual plan and get two months free." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNt-4a-okh">
-                                                                    <rect key="frame" x="184" y="41" width="200" height="89"/>
+                                                                    <rect key="frame" x="538" y="41" width="200" height="89"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="16"/>
                                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
@@ -2074,7 +2074,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rP-4I-yso">
-                                                                    <rect key="frame" x="103.5" y="22.5" width="207" height="30"/>
+                                                                    <rect key="frame" x="192" y="22.5" width="384" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="qnd-A7-9Xr"/>
                                                                     </constraints>
@@ -2295,13 +2295,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wIQ-FQ-ssu">
-                                <rect key="frame" x="0.0" y="20" width="414" height="716"/>
+                                <rect key="frame" x="0.0" y="24" width="1024" height="1322"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mVo-vf-SF0">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="73.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1024" height="136.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aF-Mo-YV9">
-                                                <rect key="frame" x="284" y="25.666666666666664" width="90" height="22.333333333333336"/>
+                                                <rect key="frame" x="894" y="48" width="90" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="90" id="U2K-vz-U5p"/>
                                                 </constraints>
@@ -2317,7 +2317,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whitelist" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agz-pH-D2H">
-                                                <rect key="frame" x="117" y="23" width="180" height="27.333333333333329"/>
+                                                <rect key="frame" x="362" y="52" width="300" height="33"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="180" id="DnP-Qg-hCq">
                                                         <variation key="heightClass=regular-widthClass=regular" constant="300"/>
@@ -2342,17 +2342,17 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQJ-2q-J2x">
-                                        <rect key="frame" x="0.0" y="73.666666666666686" width="414" height="642.33333333333326"/>
+                                        <rect key="frame" x="0.0" y="136.5" width="1024" height="1185.5"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="c4d-ah-vMu">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="642.33333333333337"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1185.5"/>
                                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Kb9-wP-0BL">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="185"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="185"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEL-fV-wRa">
-                                                            <rect key="frame" x="51.666666666666657" y="10" width="310.66666666666674" height="115"/>
+                                                            <rect key="frame" x="96" y="10" width="576" height="137"/>
                                                             <string key="text">Certain websites don't operate well with a VPN or specifically block a VPN's use. For the most seamless experience, we recommend not sending this small percentage of traffic through a VPN. This is configurable and you can add or remove sites as you would like.</string>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="20"/>
                                                             <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2370,15 +2370,15 @@
                                                     </constraints>
                                                 </view>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="whitelistedDomainCell" rowHeight="80" id="chR-bT-gjZ" customClass="WhitelistCell" customModule="Confirmed_VPN" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="240.5" width="414" height="80"/>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="whitelistedDomainCell" rowHeight="80" id="chR-bT-gjZ" customClass="WhitelistCell" customModule="Confirmed_VPN" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="240.5" width="1024" height="80"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="chR-bT-gjZ" id="7up-wJ-Ued">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="79.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" tag="500" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*.hulu.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ij-sV-FOr">
-                                                                    <rect key="frame" x="45" y="29.333333333333329" width="262" height="21"/>
+                                                                    <rect key="frame" x="120" y="29.5" width="262" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="21" id="JOq-ya-cxV"/>
                                                                         <constraint firstAttribute="width" constant="262" id="x9x-oM-uGu"/>
@@ -2391,7 +2391,7 @@
                                                                     </variation>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" tag="501" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Whitelisted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tn-2p-xi9">
-                                                                    <rect key="frame" x="461" y="29.333333333333329" width="262" height="21"/>
+                                                                    <rect key="frame" x="386" y="29.5" width="262" height="21"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="262" id="416-Za-Fx9"/>
                                                                         <constraint firstAttribute="height" constant="21" id="l6m-6e-bWj"/>
@@ -2422,15 +2422,15 @@
                                                             <outlet property="whitelistStatus" destination="9tn-2p-xi9" id="is3-B8-gqN"/>
                                                         </connections>
                                                     </tableViewCell>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="addWhitelistedDomainCell" rowHeight="120" id="jJT-Op-jKm" customClass="WhitelistAddCell" customModule="Confirmed_VPN" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="320.5" width="414" height="120"/>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="addWhitelistedDomainCell" rowHeight="120" id="jJT-Op-jKm" customClass="WhitelistAddCell" customModule="Confirmed_VPN" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="320.5" width="1024" height="120"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jJT-Op-jKm" id="o8i-Ee-OYI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="119.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="1024" height="119.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <textField opaque="NO" tag="500" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add domain (i.e. netflix.com)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7bS-tB-jYh" customClass="HoshiTextField" customModule="TextFieldEffects">
-                                                                    <rect key="frame" x="45" y="32" width="537.66666666666663" height="56"/>
+                                                                    <rect key="frame" x="120" y="32" width="537.5" height="56"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="56" id="nI6-Dc-gMK"/>
                                                                     </constraints>
@@ -2762,7 +2762,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirmed includes a Content Blocker that protects your privacy and increases performance in Safari by blocking invasive code." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAR-ME-6mT">
-                                                            <rect key="frame" x="52" y="20" width="310.5" height="90"/>
+                                                            <rect key="frame" x="96" y="20" width="576" height="90"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="90" id="tHd-iS-aJe"/>
                                                             </constraints>
@@ -2774,7 +2774,7 @@
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To enable, go to Settings &gt; Safari &gt; Content Blocker" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5p-7G-DfK">
-                                                            <rect key="frame" x="52" y="120" width="310.5" height="90"/>
+                                                            <rect key="frame" x="96" y="120" width="576" height="90"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="90" id="pTN-RR-9ZT"/>
                                                             </constraints>
@@ -2821,7 +2821,7 @@
                                                                     </variation>
                                                                 </label>
                                                                 <switch opaque="NO" tag="501" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kff-GT-Zaa">
-                                                                    <rect key="frame" x="245" y="24.5" width="51" height="31"/>
+                                                                    <rect key="frame" x="599" y="24.5" width="51" height="31"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="31" id="fVj-O8-Mgf"/>
                                                                         <constraint firstAttribute="width" constant="49" id="htt-Fb-trm"/>
@@ -3063,7 +3063,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="42e-yG-VLg">
-                                                    <rect key="frame" x="185" y="47" width="69" height="488"/>
+                                                    <rect key="frame" x="185" y="47" width="423" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <string key="text">Your IP address is a uniquely identifiable number to track your activities. Confirmed masks this number to let you browse anonymously. </string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
@@ -3150,7 +3150,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="upL-BX-BCS">
-                                                    <rect key="frame" x="185" y="47" width="69" height="488"/>
+                                                    <rect key="frame" x="185" y="47" width="423" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <string key="text">Your IP address is a uniquely identifiable number to track your activities. Confirmed masks this number to let you browse anonymously. </string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
@@ -3237,7 +3237,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTq-mf-eoG">
-                                                    <rect key="frame" x="185" y="47" width="69" height="488"/>
+                                                    <rect key="frame" x="185" y="47" width="423" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <string key="text">Your IP address is a uniquely identifiable number to track your activities. Confirmed masks this number to let you browse anonymously. </string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
@@ -3324,7 +3324,7 @@
                                                     </variation>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="502" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCp-MF-Ozw">
-                                                    <rect key="frame" x="185" y="47" width="69" height="488"/>
+                                                    <rect key="frame" x="185" y="47" width="423" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <string key="text">Your IP address is a uniquely identifiable number to track your activities. Confirmed masks this number to let you browse anonymously. </string>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
@@ -3372,7 +3372,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" tag="501" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xMY-0a-SHd">
-                                                    <rect key="frame" x="186" y="7" width="109" height="30"/>
+                                                    <rect key="frame" x="186" y="11" width="109" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="5gk-c9-CXW"/>
                                                         <constraint firstAttribute="width" constant="109" id="TpZ-Yb-1YK"/>
@@ -3708,7 +3708,7 @@
                                 <rect key="frame" x="504" y="1330" width="16" height="16"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Confirmed VPN" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ve6-h6-unZ">
-                                <rect key="frame" x="102.5" y="384" width="819" height="48"/>
+                                <rect key="frame" x="102.5" y="324" width="819" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Jkz-b7-yap"/>
                                 </constraints>
@@ -3719,8 +3719,8 @@
                                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="54"/>
                                 </variation>
                             </label>
-                            <label opaque="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's set up Confirmed to get the best possible experience." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="ViV-f2-U7q">
-                                <rect key="frame" x="152.5" y="512" width="719" height="98.5"/>
+                            <label opaque="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirmed is the only VPN that can prove we do not store, log, access, or sell any data to third parties." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="ViV-f2-U7q">
+                                <rect key="frame" x="172.5" y="452" width="679" height="148"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="36"/>
                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3729,7 +3729,7 @@
                                 </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7WE-Zd-Si6" customClass="M13Checkbox" customModule="Confirmed_VPN" customModuleProvider="target">
-                                <rect key="frame" x="140" y="692" width="50" height="50"/>
+                                <rect key="frame" x="140" y="709" width="50" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.0" green="0.67751116069999995" blue="0.90461090690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -3757,7 +3757,7 @@
                                 </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I agree to the" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fI5-1h-PO3">
-                                <rect key="frame" x="225" y="698" width="170" height="38.5"/>
+                                <rect key="frame" x="225" y="715" width="170" height="38.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -3766,7 +3766,7 @@
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Trg-Y5-SGU">
-                                <rect key="frame" x="403" y="691.5" width="175" height="51"/>
+                                <rect key="frame" x="403" y="708.5" width="175" height="51"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                 <state key="normal" title="privacy policy">
                                     <color key="titleColor" red="0.0" green="0.67751116069999995" blue="0.90461090690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3784,7 +3784,9 @@
                             <constraint firstItem="fI5-1h-PO3" firstAttribute="leading" secondItem="7WE-Zd-Si6" secondAttribute="trailing" constant="15" id="0vH-wZ-a63">
                                 <variation key="heightClass=regular-widthClass=regular" constant="35"/>
                             </constraint>
-                            <constraint firstItem="7WE-Zd-Si6" firstAttribute="top" secondItem="Ve6-h6-unZ" secondAttribute="bottom" constant="260" id="4NE-5o-SO4"/>
+                            <constraint firstItem="7WE-Zd-Si6" firstAttribute="top" secondItem="Ve6-h6-unZ" secondAttribute="bottom" multiplier="1.1" constant="300" id="4NE-5o-SO4">
+                                <variation key="heightClass=regular-widthClass=compact" constant="240"/>
+                            </constraint>
                             <constraint firstItem="Trg-Y5-SGU" firstAttribute="centerY" secondItem="fI5-1h-PO3" secondAttribute="centerY" id="788-0E-eOA"/>
                             <constraint firstItem="SXY-ef-IxW" firstAttribute="top" secondItem="r9M-Dg-a6g" secondAttribute="bottom" id="CFT-Na-cUp"/>
                             <constraint firstItem="ViV-f2-U7q" firstAttribute="centerX" secondItem="Ve6-h6-unZ" secondAttribute="centerX" id="PwK-13-QHw"/>
@@ -3796,11 +3798,11 @@
                             <constraint firstItem="Ve6-h6-unZ" firstAttribute="width" secondItem="ucC-TW-Uhu" secondAttribute="width" multiplier="0.8" id="bxO-kE-UTn"/>
                             <constraint firstItem="fI5-1h-PO3" firstAttribute="centerY" secondItem="7WE-Zd-Si6" secondAttribute="centerY" id="eBQ-FQ-y8V"/>
                             <constraint firstItem="ViV-f2-U7q" firstAttribute="width" secondItem="Ve6-h6-unZ" secondAttribute="width" id="hbR-Ig-i8I">
-                                <variation key="heightClass=regular-widthClass=regular" constant="-100"/>
+                                <variation key="heightClass=regular-widthClass=regular" constant="-140"/>
                             </constraint>
                             <constraint firstItem="7WE-Zd-Si6" firstAttribute="width" secondItem="7WE-Zd-Si6" secondAttribute="height" multiplier="1:1" id="lNp-Vo-LIs"/>
-                            <constraint firstItem="Ve6-h6-unZ" firstAttribute="top" secondItem="NfR-M8-9e0" secondAttribute="bottom" constant="120" id="myQ-4U-sFW">
-                                <variation key="heightClass=regular-widthClass=regular" constant="360"/>
+                            <constraint firstItem="Ve6-h6-unZ" firstAttribute="top" secondItem="NfR-M8-9e0" secondAttribute="bottom" constant="140" id="myQ-4U-sFW">
+                                <variation key="heightClass=regular-widthClass=regular" constant="300"/>
                             </constraint>
                             <constraint firstItem="7WE-Zd-Si6" firstAttribute="leading" secondItem="ucC-TW-Uhu" secondAttribute="leading" constant="35" id="nJZ-ZV-bWd">
                                 <variation key="heightClass=regular-widthClass=regular" constant="140"/>

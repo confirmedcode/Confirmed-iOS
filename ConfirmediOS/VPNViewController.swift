@@ -414,7 +414,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
         NSLog("VPN view appearing here")
         super.viewDidAppear(animated)
         VPNController.syncVPNAndWhitelistingProxy()
