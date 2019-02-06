@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupLogging()
         Global.sharedUserDefaults().synchronize()
         Utils.chooseAPIVersion()
+        Auth.processPartnerCode()
         //Auth.switchAPIVersion()
         //Auth.clearCookies()
         
