@@ -76,7 +76,7 @@ class WhitelistingViewController: ConfirmedBaseViewController, UITableViewDataSo
         
         
         //toggle tunneling to load new rules
-        VPNController.reloadWhitelistRules()
+        VPNController.shared.reloadWhitelistRules()
         tableview?.reloadData()
     }
     
@@ -174,7 +174,7 @@ class WhitelistingViewController: ConfirmedBaseViewController, UITableViewDataSo
             }
         }
         
-        VPNController.reloadWhitelistRules()
+        VPNController.shared.reloadWhitelistRules()
         tableView.reloadData()
     }
     

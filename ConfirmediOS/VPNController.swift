@@ -8,16 +8,52 @@
 import UIKit
 import NetworkExtension
 import CocoaLumberjackSwift
+import TunnelKit
 
 class VPNController: NSObject {
     
+    static let shared = VPNController()
+    
+    private override init() {
+        super.init()
+        setupProtocols()
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnStatusDidChange(_:)), name: .NEVPNStatusDidChange, object: nil)
+     
+        NETunnelProviderManager.loadAllFromPreferences { (managers, error) -> Void in
+        }
+        NEVPNManager.shared().loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
+        })
+    }
+    
+    @objc func vpnStatusDidChange(_ notification: Notification) {
+        if let object = notification.object as? NETunnelProviderSession {
+            if object.manager.localizedDescription == OpenVPN.localizedName {
+                ovpn.ovpnManager = object.manager as! NETunnelProviderManager
+            }
+            if object.manager.localizedDescription == IPSecV3.localizedName {
+                ipsec.ipsecManager = object.manager
+            }
+            
+            print("DescriptionTunnel \(object.manager.localizedDescription)")
+        }
+        else if let object = notification.object as? NEVPNConnection{
+            if object.manager.localizedDescription == OpenVPN.localizedName {
+                ovpn.ovpnManager = object.manager as! NETunnelProviderManager
+            }
+            if object.manager.localizedDescription == IPSecV3.localizedName {
+                ipsec.ipsecManager = object.manager
+            }
+        }
+        
+        NotificationCenter.post(name: .vpnStatusChanged)
+    }
     
     //MARK: - PROXY METHODS
     /*
         * proxy is used for whitelisting
         * route traffic directly to site for approved domains
      */
-    static func setupWhitelistingProxy() {
+    func setupWhitelistingProxy() {
         
         Utils.setupWhitelistedDefaults()
         let vpnManager = NEVPNManager.shared()
@@ -58,9 +94,9 @@ class VPNController: NSObject {
         * disable & re-enable proxy
         * primarily to reload whitelist rules
      */
-    static func toggleWhitelistingProxy() {
+    func toggleWhitelistingProxy() {
         disableWhitelistingProxy(proxyDisabledCallback: {(error) -> Void in
-            setupWhitelistingProxy()
+            self.setupWhitelistingProxy()
         })
     }
     
@@ -68,32 +104,9 @@ class VPNController: NSObject {
         * disable proxy
         * should be synchronized with VPN state
      */
-    static func disableWhitelistingProxy(proxyDisabledCallback: ((_ error: Error?) -> Void)? = nil) {
-        let manager = NEVPNManager.shared()
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-
-            NETunnelProviderManager.loadAllFromPreferences { (managers, error) -> Void in
-                if let managers = managers {
-                    let manager: NETunnelProviderManager
-                    if managers.count > 0 {
-                        manager = managers[0]
-                    }else{
-                        manager = NETunnelProviderManager()
-                        manager.protocolConfiguration = NETunnelProviderProtocol()
-                    }
-                    
-                    manager.isEnabled = false
-                    manager.isOnDemandEnabled = false
-                    let connectRule = NEOnDemandRuleConnect()
-                    connectRule.interfaceTypeMatch = .any
-                    manager.onDemandRules = [connectRule]
-                    manager.saveToPreferences(completionHandler: { (error) -> Void in
-                        proxyDisabledCallback?(error)
-                    })
-                }else{
-                    proxyDisabledCallback?(error)
-                }
-            }
+    func disableWhitelistingProxy(proxyDisabledCallback: ((_ error: Error?) -> Void)? = nil) {
+        currentProtocol?.disableWhitelistingProxy(completion: {error in
+            
         })
         
     }
@@ -105,73 +118,36 @@ class VPNController: NSObject {
         * check for appropriate parameters and set up/install
         * enable on completion of setup
     */
-    private static func setupAndEnableVPN() -> Bool {
-        let domain = Utils.getSavedRegion()
-        
-        if let p12base64 = Global.keychain[Global.kConfirmedP12Key], let UUID = Global.keychain[Global.kConfirmedID], let dataEncoded = Data(base64Encoded: p12base64, options: .ignoreUnknownCharacters)  {
-            self.setupVPN(ipAddress: domain, p12data: dataEncoded, p12Pass: Global.vpnPassword, localId: UUID, completion: {
-                self.enableVPN()
-            })
-                
-            return true
-        }
-        
-        return false
-    }
     
     /*
         * master function for initiating VPN connections
      */
-    static  func connectToVPN() { //if we have a valid P12 file, attempt connection
-        
-        //try to setup VPN
-        if !setupAndEnableVPN() {
-            //if fails, try to recover with a sign in
-            Auth.getKey(callback: {(_ status: Bool, _ reason: String, errorCode : Int) -> Void in
-                if status {
-                    let didSetupVPN = setupAndEnableVPN()
-                    print("Did setup VPN \(didSetupVPN)")
-                }
-                else {
-                    if errorCode == Global.kInternetDownError {
-                        NotificationCenter.post(name: .internetDownNotification)
-                    }
-                }
-            })
-        }
+    func connectToVPN() {
+        currentProtocol?.connectToVPN()
         
     }
     
-    static func disconnectFromVPN() {
-        let manager = NEVPNManager.shared()
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            NEVPNManager.shared().isOnDemandEnabled = false
-            manager.saveToPreferences(completionHandler: {(_ error: Error?) -> Void in
-                do {
-                    NEVPNManager.shared().connection.stopVPNTunnel();
-                }
-            })
-        })
-        disableWhitelistingProxy()
+    func disconnectFromVPN() {
+        currentProtocol?.disconnectFromVPN()
     }
     
     /*
         * ensure the VPN & whitelisting proxy are in sync
         * proxy follows status of VPN
      */
-    static func syncVPNAndWhitelistingProxy() {
+    func syncVPNAndWhitelistingProxy() {
         let manager = NEVPNManager.shared()
         manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
             if manager.connection.status == .connected || manager.connection.status == .connecting || manager.isOnDemandEnabled {
-                VPNController.setupWhitelistingProxy()
+                VPNController.shared.setupWhitelistingProxy()
             }
             else {
-                VPNController.disableWhitelistingProxy()
+                VPNController.shared.disableWhitelistingProxy()
             }
         })
     }
     
-    static func forceVPNOff() {
+    func forceVPNOff() {
         let manager = NEVPNManager.shared()
         manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
             if !manager.isEnabled {
@@ -205,97 +181,53 @@ class VPNController: NSObject {
         disableWhitelistingProxy()
     }
     
-    private static func enableVPN() {
-        let manager = NEVPNManager.shared()
-        
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            manager.isOnDemandEnabled = true
-            manager.isEnabled = true
-            let connectRule = NEOnDemandRuleConnect()
-            connectRule.interfaceTypeMatch = .any
-            manager.onDemandRules = [connectRule]
-            
-            manager.protocolConfiguration?.disconnectOnSleep = false
-            manager.saveToPreferences(completionHandler: {(_ error: Error?) -> Void in
-                do {
-                    DDLogInfo("Starting VPN")
-                    try NEVPNManager.shared().connection.startVPNTunnel();
-                }
-                catch {
-                    DDLogError("Failed to start vpn: \(error)")
-                }
-            })
-        })
-        
-        setupWhitelistingProxy()
-    }
-    
-    static func reloadWhitelistRules() {
-        VPNController.disconnectFromVPN()
+    func reloadWhitelistRules() {
+        currentProtocol?.disconnectFromVPN()
         DispatchQueue.main.async {
-            VPNController.connectToVPN()
-            VPNController.toggleWhitelistingProxy()
+            self.currentProtocol?.connectToVPN()
+            self.toggleWhitelistingProxy()
         }
     }
     
-    private  static func setupVPN(ipAddress : String, p12data : Data, p12Pass : String, localId: String, completion: @escaping () -> Void) {
-        let manager = NEVPNManager.shared()
+    func setupProtocols() {
+        availableProtocols.append(ipsec)
+        availableProtocols.append(ovpn)
         
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            let p = NEVPNProtocolIKEv2()
-            
-            p.serverAddress = ipAddress
-            p.serverCertificateIssuerCommonName = Global.remoteIdentifier
-            p.remoteIdentifier = Global.remoteIdentifier
-            
-            p.certificateType = NEVPNIKEv2CertificateType.ECDSA256
-            p.authenticationMethod = NEVPNIKEAuthenticationMethod.certificate
-            p.localIdentifier = localId
-            p.useExtendedAuthentication = false
-            p.disconnectOnSleep = false
-            p.enablePFS = true
-            
-            p.childSecurityAssociationParameters.diffieHellmanGroup = NEVPNIKEv2DiffieHellmanGroup.group19
-            p.childSecurityAssociationParameters.encryptionAlgorithm = NEVPNIKEv2EncryptionAlgorithm.algorithmAES128GCM
-            p.childSecurityAssociationParameters.integrityAlgorithm = NEVPNIKEv2IntegrityAlgorithm.SHA512
-            p.childSecurityAssociationParameters.lifetimeMinutes = 1440
-            
-            p.ikeSecurityAssociationParameters.diffieHellmanGroup = NEVPNIKEv2DiffieHellmanGroup.group19
-            p.ikeSecurityAssociationParameters.encryptionAlgorithm = NEVPNIKEv2EncryptionAlgorithm.algorithmAES128GCM
-            p.ikeSecurityAssociationParameters.integrityAlgorithm = NEVPNIKEv2IntegrityAlgorithm.SHA512
-            p.ikeSecurityAssociationParameters.lifetimeMinutes = 1440
-            
-            p.deadPeerDetectionRate = NEVPNIKEv2DeadPeerDetectionRate.high
-            p.identityData = p12data
-            p.identityDataPassword = p12Pass
-            
-            manager.protocolConfiguration = p
-            manager.isOnDemandEnabled = true
-            
-            
-            let connectRule = NEOnDemandRuleConnect()
-            connectRule.interfaceTypeMatch = .any
-            
-            manager.onDemandRules = [connectRule]
-            DDLogInfo("VPN status:  \(manager.connection.status)")
-            manager.localizedDescription! = Global.vpnName
-            
-            manager.saveToPreferences(completionHandler: {(_ error: Error?) -> Void in
-                if let e = error {
-                    DDLogError("Saving Error \(e)")
-                    
-                    if ((error! as NSError).code == 4) { //if config is stale, probably multithreading bug. Can this be fixed w/ a lock?
-                        DDLogInfo("Trying again")
-                        self.setupVPN(ipAddress: ipAddress, p12data: p12data, p12Pass: p12Pass, localId: localId, completion: {
-                            completion()
-                        })
-                    }
-                }
-                else {
-                    completion()
-                }
+        updateProtocol()
+    }
+    
+    func updateProtocol() {
+        if SharedUtils.getActiveProtocol() == OpenVPN.protocolName {
+            ipsec.disconnectFromVPNOnly()
+            currentProtocol = ovpn
+        }
+        else {
+            currentProtocol = ipsec
+        }
+        
+        currentProtocol?.endpointForRegion(region: Utils.getSavedRegion()) //calling this method will choose a new region if unsupported (rare)
+    }
+    
+    func vpnState(completion: @escaping (_ status: NEVPNStatus) -> Void) -> Void {
+        //NEED TO MAKE ASYNC OR HAVE WAY TO MAKE SURE THIS IS LOADED
+        if currentProtocol == nil {
+            setupProtocols()
+        }
+        
+        if let proto = currentProtocol {
+            proto.getStatus(completion: { status in
+                completion(status)
             })
-        })
+        }
+        else {
+            completion(.invalid)
+        }
     }
 
+    let ipsec = IPSecV3.init()
+    let ovpn = OpenVPN.init()
+    
+    var availableProtocols = [ConfirmedVPNProtocol]()
+    var currentProtocol : ConfirmedVPNProtocol? = nil
+    
 }

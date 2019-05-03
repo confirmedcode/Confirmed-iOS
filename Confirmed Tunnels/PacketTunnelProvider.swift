@@ -5,15 +5,20 @@
 //  Copyright © 2018 Confirmed Inc. All rights reserved.
 //
 
+import TunnelKit
 import NetworkExtension
 import NEKit
 
-class PacketTunnelProvider: NEPacketTunnelProvider {
+class PacketTunnelProvider: TunnelKitProvider {
     
     //MARK: - OVERRIDES
     
     override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        super.startTunnel(options: options, completionHandler: completionHandler)
+        
+        if SharedUtils.getActiveProtocol() == OpenVPN.protocolName {
+            super.startTunnel(options: options, completionHandler: completionHandler)
+        }
+
         if proxyServer != nil {
             proxyServer.stop()
         }
@@ -137,3 +142,4 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     var proxyServer: ProxyServer!
 
 }
+

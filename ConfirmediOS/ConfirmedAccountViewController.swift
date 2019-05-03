@@ -8,12 +8,14 @@ import UIKit
 import Alamofire
 import NVActivityIndicatorView
 import CocoaLumberjackSwift
+import PopupDialog
 
 class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDelegate, UITableViewDataSource, NVActivityIndicatorViewable {
 
     //MARK: - OVERRIDE
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +69,20 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
                 return cell
             }
         }
+        else if Global.isVersion(version: .v3API) {
+            if indexPath.section == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ProtocolCell") as! AccountProtocolCell
+                cell.protocolName?.text = type(of: VPNController.shared.currentProtocol!).protocolName
+                cell.changeProtocol?.addTarget(self, action: #selector(showChangeProtocol), for: .touchUpInside)
+                cell.changeProtocol?.isEnabled = false
+                
+                return cell
+            }
+            else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SignoutCell") as! AccountSignoutCell
+                return cell
+            }
+        }
         else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SignoutCell") as! AccountSignoutCell
             return cell
@@ -80,11 +96,22 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
             return 1
         }
         
-        if section == 1 {
-            return 2
+        //only allow protocol switching for v3 users
+        if Global.isVersion(version: .v3API) {
+            if section == 1 {
+                return 2
+            }
+            if section == 2 {
+                return 1
+            }
+        }
+        else {
+            if section == 1 {
+                return 1
+            }
         }
         
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -96,6 +123,11 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
                 return 125
             }
         }
+        
+        if indexPath.section == 2 && Global.isVersion(version: .v3API) {
+            return 90
+        }
+        
         return 75
     }
     
@@ -107,10 +139,13 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
         let email = Global.keychain[Global.kConfirmedEmail]
         let password = Global.keychain[Global.kConfirmedPassword]
         
-        if email == nil || password == nil {
-            return 2 //don't show sign out button unless they are signed in
+        var totalSections = 3
+        //show protocol switching for v3+
+        if Global.isVersion(version: .v3API) {
+            totalSections = 4
         }
-        return 3
+        
+        return totalSections
     }
     
     //MARK: - ACTION
@@ -173,6 +208,45 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
     }
     
     
+    @objc func showChangeProtocol() {
+        DDLogInfo("Changing protocol")
+        let title = "CHANGE PROTOCOL"
+        let message = "Choose which VPN protocol better suits your needs."
+        
+        let popup = PopupDialog(title: title, message: message, image: nil, buttonAlignment: .vertical, transitionStyle: .zoomIn)
+        CancelButton.appearance().titleColor = UIColor.darkGray
+        let enableIPSEC = DefaultButton(title: "IPSEC (Recommended)", dismissOnTap: true) {
+            SharedUtils.setActiveProtocol(activeProtocol: IPSecV3.protocolName)
+            VPNController.shared.updateProtocol()
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+            NotificationCenter.post(name: .switchingAPIVersions)
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: {
+                VPNController.shared.connectToVPN()
+            })
+        }
+        
+        let enableOVPN = DefaultButton(title: "Open VPN", dismissOnTap: true) {
+            SharedUtils.setActiveProtocol(activeProtocol: OpenVPN.protocolName)
+            VPNController.shared.updateProtocol()
+            DispatchQueue.main.async {
+                self.tableView?.reloadData()
+            }
+            NotificationCenter.post(name: .switchingAPIVersions)
+            VPNController.shared.disconnectFromVPN()
+            DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: {
+                VPNController.shared.connectToVPN()
+            })
+        }
+        let cancelButton = CancelButton(title: "Cancel", dismissOnTap: true) { }
+        
+        popup.addButtons([enableIPSEC, enableOVPN, cancelButton])
+        
+        self.present(popup, animated: true, completion: nil)
+
+    }
+    
     @objc func showAddEmailView() {
         self.performSegue(withIdentifier: "showAddEmailScreen", sender: self)
     }
@@ -205,7 +279,11 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
         },
             errored: {
                 DDLogWarn("Subscription upgrade error")
-                SCLAlertView(appearance: defaultAlertAppearance).showError("Hold On...".localized(), subTitle:"Please make sure your Internet connection is active. Otherwise, please e-mail team@confirmedvpn.com".localized(), closeButtonTitle:"OK")
+                let title = "Error Signing Up..."
+                let message = "Please make sure your Internet connection is active. Otherwise, please e-mail team@confirmedvpn.com."
+                self.showPopupDialog(title: title, message: message, acceptButton: "OK")
+                
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.reloadSubscriptionData()
                     self.stopLoadingScreen()

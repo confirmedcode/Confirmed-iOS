@@ -212,8 +212,10 @@ class SignupViewController: ConfirmedBaseViewController {
                 self.startFreeTrialButton?.setOriginalState()
                 self.startFreeTrialButton?.layer.cornerRadius = 4
                 self.unblockUserInteraction()
+                self.showPopupDialog(title: "Error Signing Up",
+                                message: "Please make sure your Internet connection is active. Otherwise, please e-mail team@confirmedvpn.com".localized(),
+                                acceptButton: "OK")
                 
-                SCLAlertView(appearance: defaultAlertAppearance).showError("Hold On...".localized(), subTitle:"Please make sure your Internet connection is active. Otherwise, please e-mail team@confirmedvpn.com".localized(), closeButtonTitle:"OK")
                 
                 UIView.transition(with: self.pricingSubtitle!,
                                   duration: 0.25,
@@ -260,7 +262,10 @@ class SignupViewController: ConfirmedBaseViewController {
             
             if results.restoreFailedPurchases.count > 0 {
                 DDLogError("Restore Failed: \(results.restoreFailedPurchases)")
-                SCLAlertView(appearance: defaultAlertAppearance).showError("Hold On...".localized(), subTitle:"Please make sure your Internet connection is active and that you have an active subscription already. Otherwise, please start your free trial or e-mail team@confirmedvpn.com", closeButtonTitle:"OK")
+                self.showPopupDialog(title: "Error Restoring Purchases",
+                                message: "Please make sure your Internet connection is active and that you have an active subscription already. Otherwise, please start your free trial or e-mail team@confirmedvpn.com",
+                                acceptButton: "OK")
+                
                 
                 self.restorePurchasesButton?.isUserInteractionEnabled = true
                 self.restorePurchasesButton?.setOriginalState()
@@ -288,8 +293,9 @@ class SignupViewController: ConfirmedBaseViewController {
                         DDLogInfo("Subscription not active")
                         self.unblockUserInteraction()
                         
-                        SCLAlertView(appearance: defaultAlertAppearance).showError("No Active Subscription", subTitle:"Please make sure your Internet connection is active and that you have an active subscription already. Otherwise, please start your free trial or e-mail team@confirmedvpn.com", closeButtonTitle:"OK")
-                        
+                        self.showPopupDialog(title: "No Active Subscription",
+                                             message: "Please make sure your Internet connection is active and that you have an active subscription already. Otherwise, please start your free trial or e-mail team@confirmedvpn.com",
+                                             acceptButton: "OK")
                         
                         self.restorePurchasesButton?.isUserInteractionEnabled = true
                         self.restorePurchasesButton?.setOriginalState()
@@ -300,9 +306,9 @@ class SignupViewController: ConfirmedBaseViewController {
             else {
                 DDLogInfo("Nothing to Restore")
                 self.unblockUserInteraction()
-                
-                SCLAlertView(appearance: defaultAlertAppearance).showError("Hold On...".localized(), subTitle:"Please make sure your Internet connection is active and that you have an active subscription already. Otherwise, please start your free trial or e-mail team@confirmedvpn.com", closeButtonTitle:"OK")
-                
+                self.showPopupDialog(title: "No Active Subscription",
+                                     message: "Please make sure your Internet connection is active and that you have an active subscription already. Otherwise, please start your free trial or e-mail team@confirmedvpn.com",
+                                     acceptButton: "OK")                
             }
         }
     }

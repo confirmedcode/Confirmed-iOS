@@ -44,6 +44,16 @@ open class ConfirmedBaseViewController: UIViewController, MFMailComposeViewContr
         // Do any additional setup after loading the view.
     }
 
+    func showPopupDialog(title : String, message : String, acceptButton : String) {
+        let popup = PopupDialog(title: title.uppercased(), message: message, image: nil, transitionStyle: .zoomIn, hideStatusBar: false)
+        
+        let acceptButton = DefaultButton(title: "OK", dismissOnTap: true) { }
+        popup.addButtons([acceptButton])
+        
+        self.present(popup, animated: true, completion: nil)
+        
+    }
+    
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
     }
@@ -105,7 +115,8 @@ open class ConfirmedBaseViewController: UIViewController, MFMailComposeViewContr
             self.present(composeVC, animated: true, completion: nil)
         } else {
             // Tell user about not able to send email directly.
-            SCLAlertView(appearance: defaultAlertAppearance).showError("Hold On...".localized(), subTitle:"Please make sure you have added an e-mail account to your iOS device and try again.".localized(), closeButtonTitle:"OK")
+            showPopupDialog(title: "Email Not Setup",
+                            message: "Please make sure you have added an e-mail account to your iOS device and try again.", acceptButton: "OK")
         }
     }
     

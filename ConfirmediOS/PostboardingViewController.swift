@@ -229,7 +229,7 @@ class PostboardingViewController: BWWalkthroughViewController, BWWalkthroughView
                 
             }
             else {
-                VPNController.connectToVPN()
+                VPNController.shared.connectToVPN()
             }
         }
         if currentPage == 1{

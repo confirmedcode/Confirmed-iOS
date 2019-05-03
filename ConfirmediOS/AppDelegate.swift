@@ -16,6 +16,7 @@ import CloudKit
 import Alamofire
 import CocoaLumberjackSwift
 import MessageUI
+import PopupDialog
 
 let fileLogger: DDFileLogger = DDFileLogger() // File Logger
 
@@ -24,14 +25,16 @@ let fileLogger: DDFileLogger = DDFileLogger() // File Logger
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-       
         setupLogging()
+        application.registerForRemoteNotifications()
         Global.sharedUserDefaults().synchronize()
         Utils.chooseAPIVersion()
         Auth.processPartnerCode()
         //Auth.switchAPIVersion()
         //Auth.clearCookies()
+        
         
         Armchair.appID("1286896061")
         Armchair.affiliateCode("11l32tU")
@@ -41,37 +44,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 DDLogError("Reloaded blocker with error \(err)")
             }
         }
+        
+        let buttonAppearance = DefaultButton.appearance()
+        buttonAppearance.titleColor = UIColor.tunnelsBlueColor
 
         //start the subscription check
         TunnelsSubscription.isSubscribed = .Loading
         TunnelsSubscription.isSubscribed(refreshITunesIfNeeded: false, isSubscribed:{
             if Auth.signInError == 1 {
-                let appearance = SCLAlertView.SCLAppearance(
-                    kCircleBackgroundTopPosition: -100,
-                    kTitleTop: 50,
-                    kTitleFont: UIFont(name: "AvenirNext-Regular", size: 20)!,
-                    kTextFont: UIFont(name: "AvenirNext-Regular", size: 14)!,
-                    kButtonFont: UIFont(name: "AvenirNext-Regular", size: 14)!,
-                    showCloseButton: true
-                )
-                let alertView = SCLAlertView(appearance: appearance)
-                alertView.showWarning("Hold On...".localized(), subTitle:"Please check your e-mail for a confirmation link (check spam or e-mail team@confirmedvpn.com if you don't see a message from us).", closeButtonTitle:"OK")
                 DDLogWarn("Email Not Confirmed \(Global.keychain[Global.kConfirmedEmail] ?? "")")
                 
             }
         }, isNotSubscribed:{
             if Auth.signInError == 1 {
-                let appearance = SCLAlertView.SCLAppearance(
-                    kCircleBackgroundTopPosition: -100,
-                    kTitleTop: 50,
-                    kTitleFont: UIFont(name: "AvenirNext-Regular", size: 20)!,
-                    kTextFont: UIFont(name: "AvenirNext-Regular", size: 14)!,
-                    kButtonFont: UIFont(name: "AvenirNext-Regular", size: 14)!,
-                    showCloseButton: true
-                )
-                let alertView = SCLAlertView(appearance: appearance)
-                alertView.showWarning("Hold On...".localized(), subTitle:"Please check your e-mail for a confirmation link (check spam or e-mail team@confirmedvpn.com if you don't see a message from us).", closeButtonTitle:"OK")
-                DDLogWarn("Email Not Confirmed \(Global.keychain[Global.kConfirmedEmail] ?? "")")
+               DDLogWarn("Email Not Confirmed \(Global.keychain[Global.kConfirmedEmail] ?? "")")
             }
         })
         TunnelsSubscription.cacheLocalizedPrice()
@@ -139,6 +125,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })*/
     }
     
+    func setupCloudKitSubscription(categoryName : String) {
+        let privateDatabase = CKContainer.init(identifier: Global.kICloudContainer).privateCloudDatabase
+        let predicate = NSPredicate.init(value: true)
+        var subscription = CKQuerySubscription(recordType: categoryName,
+                                               predicate: predicate,
+                                               options: .firesOnRecordCreation)
+        
+        var notificationInfo = CKSubscription.NotificationInfo()
+        notificationInfo.alertBody = ""
+        notificationInfo.shouldSendContentAvailable = true
+        notificationInfo.shouldBadge = false
+        notificationInfo.category = categoryName
+        
+        subscription.notificationInfo = notificationInfo
+        
+        privateDatabase.save(subscription,
+                             completionHandler: ({returnRecord, error in
+                                if let err = error {
+                                    DDLogInfo("Could not save CloudKit subscription (signed in?) \(err)")
+                                } else {
+                                    DispatchQueue.main.async() {
+                                        DDLogInfo("Successfully saved CloudKit subscription")
+                                    }
+                                }
+                             }))
+    }
+    
     func setupCloudKit() {
         //clear the database
         DDLogInfo("Setting up CloudKit")
@@ -148,52 +161,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //this is a workaround for an Apple bug where a tunnel cannot be closed from a widget
         let privateDatabase = CKContainer.init(identifier: Global.kICloudContainer).privateCloudDatabase
-        let predicate = NSPredicate.init(value: true)
-        var subscription = CKQuerySubscription(recordType: Global.kCloseTunnelRecord,
-                                               predicate: predicate,
-                                               options: .firesOnRecordCreation)
         
-        var notificationInfo = CKSubscription.NotificationInfo()
-        notificationInfo.alertBody = ""
-        notificationInfo.shouldSendContentAvailable = true
-        notificationInfo.shouldBadge = false
-        notificationInfo.category = Global.kCloseTunnelRecord
-        
-        subscription.notificationInfo = notificationInfo
-        
-        privateDatabase.save(subscription,
-                              completionHandler: ({returnRecord, error in
-                                if let err = error {
-                                    DDLogInfo("Could not save Close CloudKit Record (signed in?) \(err)")
-                                } else {
-                                    DispatchQueue.main.async() {
-                                        DDLogInfo("Successfully saved CloudKit Close Record")
-                                    }
-                                }
-                              }))
-        
-        subscription = CKQuerySubscription(recordType: Global.kOpenTunnelRecord,
-                                               predicate: predicate,
-                                               options: .firesOnRecordCreation)
-        
-        notificationInfo = CKSubscription.NotificationInfo()
-        notificationInfo.alertBody = ""
-        notificationInfo.shouldSendContentAvailable = true
-        notificationInfo.shouldBadge = false
-        notificationInfo.category = Global.kOpenTunnelRecord
-        
-        subscription.notificationInfo = notificationInfo
-        
-        privateDatabase.save(subscription,
-                             completionHandler: ({returnRecord, error in
-                                if let err = error {
-                                    DDLogInfo("Could not save Open CloudKit Record (iCloud signed in?) \(err)")
-                                } else {
-                                    DispatchQueue.main.async() {
-                                        DDLogInfo("Successfully saved CloudKit Open Record")
-                                    }
-                                }
-                             }))
+        privateDatabase.fetchAllSubscriptions(completionHandler: { subscriptions, error in
+            if error == nil, let subs = subscriptions {
+                var isSubscribedToOpen = false
+                var isSubscribedToClose = false
+                
+                for subscriptionObject in subs {
+                    if subscriptionObject.notificationInfo?.category == Global.kCloseTunnelRecord {
+                        isSubscribedToClose = true
+                    }
+                    if subscriptionObject.notificationInfo?.category == Global.kOpenTunnelRecord {
+                        isSubscribedToOpen = true
+                    }
+                }
+                
+                if !isSubscribedToOpen {
+                    self.setupCloudKitSubscription(categoryName: Global.kOpenTunnelRecord)
+                }
+                if !isSubscribedToClose {
+                    self.setupCloudKitSubscription(categoryName: Global.kCloseTunnelRecord)
+                }
+            }
+            else {
+                self.setupCloudKitSubscription(categoryName: Global.kCloseTunnelRecord)
+                self.setupCloudKitSubscription(categoryName: Global.kOpenTunnelRecord)
+            }
+        })
     }
     
 
@@ -205,8 +199,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let aps = userInfo["aps"] as? NSDictionary {
                 if let message = aps["category"] as? NSString {
                     //Do stuff
-                    if message.contains("CloseTunnelRemotely") {
-                        VPNController.disableWhitelistingProxy()
+                    if message.contains(Global.kCloseTunnelRecord) {
+                        VPNController.shared.disconnectFromVPN()
+                        //VPNController.shared.disableWhitelistingProxy()
                         clearDatabaseForRecord(recordName: Global.kOpenTunnelRecord)
                         clearDatabaseForRecord(recordName: Global.kCloseTunnelRecord)
                     }
@@ -215,8 +210,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let aps = userInfo["aps"] as? NSDictionary {
             if let message = aps["category"] as? NSString {
                 //Do stuff
-                if message.contains("OpenTunnelRemotely") {
-                    VPNController.setupWhitelistingProxy()
+                if message.contains(Global.kOpenTunnelRecord) {
+                    //VPNController.shared.setupWhitelistingProxy()
+                    VPNController.shared.connectToVPN()
                     clearDatabaseForRecord(recordName: Global.kOpenTunnelRecord)
                     clearDatabaseForRecord(recordName: Global.kCloseTunnelRecord)
                 }
@@ -274,7 +270,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         DDLogInfo("App is active again")
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        VPNController.syncVPNAndWhitelistingProxy()
+        VPNController.shared.syncVPNAndWhitelistingProxy()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

@@ -9,3 +9,5 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <ifaddrs.h>
+
+#include "OpenSSLHelper.h"

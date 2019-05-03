@@ -32,7 +32,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     }
     
     @objc func showInternetDownNotification() {
-        SCLAlertView(appearance: defaultAlertAppearance).showError("Hold On...".localized(), subTitle:"Please make sure your Internet connection is active. Otherwise, please e-mail team@confirmedvpn.com".localized(), closeButtonTitle:"OK")
+        //no need for this for now with status bar notification
     }
     
     @objc func showContentBlocker() {
@@ -87,7 +87,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
                     
                 } else {
                     DDLogWarn("NETWORK ERROR: \(error)")
-                    self.speedTestLabel?.text = "N/A"
+                    self.speedTestLabel?.text = "..."
                 }
             }
         }
@@ -162,33 +162,12 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         self.vpnLoadingView?.layer.shadowOpacity = 0.1;
         self.vpnLoadingView?.layer.cornerRadius = (self.vpnLoadingView?.frame.size.width)! / 2.0;  // half the width/height
 
-        let regions = countrySelection.items
-        let selectedRegion = Utils.getSavedRegion()
-        for i in 0 ..< regions.count  {
-            let endpoint = regions[i].endpoint
-            if endpoint == selectedRegion {
-                self.countryFlag?.image = UIImage.init(named: regions[i].flagImagePath)
-                self.countryButton?.setTitle(regions[i].countryName, for: .normal)
-            }
-        }
+        updateActiveCountry()
         
         self.vpnPowerButton?.isEnabled = false
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object: NEVPNManager.shared().connection, queue: OperationQueue.main) { (notification) -> Void in
-            if NEVPNManager.shared().connection.status == .connected {
-                self.vpnPowerButton?.isEnabled = true
-                self.setVPNButtonEnabled()
-            } else if NEVPNManager.shared().connection.status == .disconnected {
-                self.setVPNButtonDisabled()
-            } else if NEVPNManager.shared().connection.status == .connecting {
-                self.vpnPowerButton?.isEnabled = true
-                self.setVPNButtonConnecting()
-            }
-            else if NEVPNManager.shared().connection.status == .disconnecting {
-                self.setVPNButtonConnecting()
-            }
-            DDLogInfo("VPN Status: \(NEVPNManager.shared().connection.status.rawValue)");
-        }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnStatusDidChange(_:)), name: .vpnStatusChanged, object: nil)
+    
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: Global.fetchingP12Notification), object: nil, queue: OperationQueue.main) { (notification) -> Void in
             self.setVPNButtonGettingP12()
         }
@@ -208,6 +187,21 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         TunnelsSubscription.refreshAndUploadReceipt()
     }
     
+    func updateActiveCountry() {
+        DispatchQueue.main.async {
+            let regions = self.countrySelection.items
+            let selectedRegion = Utils.getSavedRegion()
+            for serverRegion in regions  {
+                let meta = regionMetadata[serverRegion]!
+                
+                if serverRegion == selectedRegion {
+                    self.countryFlag?.image = UIImage.init(named: meta.flagImagePath)
+                    self.countryButton?.setTitle(meta.countryName, for: .normal)
+                }
+            }
+        }
+    }
+    
     @objc func reloadServerEndpoints(notification: Notification) {
         countrySelection.loadEndpoints()
     }
@@ -215,12 +209,13 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     @objc func didSelectCountry(notification: Notification) {
         stopVPN()
         DDLogInfo("Selected country")
-        var obj = notification.object as! ServerEndpoint
-        self.countryFlag?.image = UIImage.init(named: obj.flagImagePath)
-        self.countryButton?.setTitle(obj.countryName, for: .normal)
-        Utils.setSavedRegion(region: obj.endpoint)
+        var obj = notification.object as! ServerRegion
+        let meta = regionMetadata[obj]!
+        self.countryFlag?.image = UIImage.init(named: meta.flagImagePath)
+        self.countryButton?.setTitle(meta.countryName, for: .normal)
+        Utils.setSavedRegion(region: obj)
         
-        VPNController.connectToVPN()
+        VPNController.shared.connectToVPN()
         //showCountryList()
         
         UIView.animate(withDuration: 0.35, delay: 0, options: .curveEaseInOut, animations: {
@@ -232,6 +227,31 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
             self.sideMenuButton?.alpha = 1.0
             self.countryArrowButton?.transform = CGAffineTransform(rotationAngle: 0)
         })
+    }
+    
+    @objc func vpnStatusDidChange(_ notification: Notification) {
+        if notification.object is NETunnelProviderSession {
+            return;
+        }
+        DispatchQueue.main.async {
+            self.updateActiveCountry()
+            VPNController.shared.vpnState(completion: { status in
+                if status == .connected {
+                    self.vpnPowerButton?.isEnabled = true
+                    self.setVPNButtonEnabled()
+                } else if status == .disconnected {
+                    self.setVPNButtonDisabled()
+                } else if status == .connecting {
+                    self.vpnPowerButton?.isEnabled = true
+                    self.setVPNButtonConnecting()
+                }
+                else if status == .disconnecting {
+                    self.setVPNButtonConnecting()
+                }
+            })
+        }
+        
+        DDLogInfo("VPN Status: \(NEVPNManager.shared().connection.status.rawValue)")
     }
     
     func showPostboarding() {
@@ -268,7 +288,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         let stb = UIStoryboard(name: "Main", bundle: nil)
         let walkthrough = stb.instantiateViewController(withIdentifier: "walk") as! WalkthroughViewController
         if (TunnelsSubscription.isSubscribed != .Subscribed) {
-            VPNController.forceVPNOff()
+            VPNController.shared.forceVPNOff()
             walkthrough.setupOnboardingMode()
         }
         else {
@@ -355,10 +375,8 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     }
     
     @IBAction func toggleVPN() {
-        let manager = NEVPNManager.shared()
-        
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            if manager.connection.status == .disconnected || manager.connection.status == .invalid {
+        VPNController.shared.vpnState(completion: { status in
+            if status == .disconnected || status == .invalid {
                 self.startVPN()
             }
             else {
@@ -369,20 +387,19 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
 
     
     @IBAction func startVPN() {
-        VPNController.connectToVPN()
+        VPNController.shared.connectToVPN()
     }
     
     @IBAction func stopVPN() {
-        VPNController.disconnectFromVPN()
+        VPNController.shared.disconnectFromVPN()
     }
     
     func setupVPNButtons() {
-        let manager = NEVPNManager.shared()
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            if manager.connection.status == .disconnected || manager.connection.status == .invalid {
+        VPNController.shared.vpnState(completion: { status in
+            if status == .disconnected || status == .invalid {
                 self.setVPNButtonDisabled()
             }
-            else if manager.connection.status == .connected {
+            else if status == .connected {
                 self.setVPNButtonEnabled()
             }
             else {
@@ -397,7 +414,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        updateActiveCountry()
         self.vpnLoadingView?.addSubview(CircularSpinner.sharedInstance)
         CircularSpinner.useContainerView(self.vpnLoadingView)
         CircularSpinner.trackLineWidth = 3
@@ -415,9 +432,9 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     
     override func viewDidAppear(_ animated: Bool) {
         NSLog("VPN view appearing here")
-        super.viewDidAppear(animated)
-        VPNController.syncVPNAndWhitelistingProxy()
         
+        super.viewDidAppear(animated)
+        VPNController.shared.syncVPNAndWhitelistingProxy()
         let userDefaults = UserDefaults.standard
         if !userDefaults.bool(forKey: "onboardedUser") && Global.keychain[Global.kConfirmedEmail] == nil && Global.keychain[Global.kConfirmedID] == nil {
             showOnboarding()
@@ -465,17 +482,19 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     // MARK: VPN Power Button
     
     func setVPNButtonEnabled() {
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.vpnPowerButton?.tintColor = .tunnelsLightBlueColor
             CircularSpinner.sharedInstance.pgColor = .tunnelsLightBlueColor
             self.vpnStatusLabel?.textColor = UIColor.white
         })
         
-        CircularSpinner.sharedInstance.type = .determinate
-        CircularSpinner.setValue(1.0, animated: true)
         
+        if CircularSpinner.sharedInstance.type == .indeterminate {
+            CircularSpinner.sharedInstance.type = .determinate
+        }
         self.vpnStatusLabel?.text = "PROTECTED".localized()
-        CircularSpinner.sharedInstance.appearanceProgressLayer()
+        //CircularSpinner.sharedInstance.appearanceProgressLayer()
         
         DDLogInfo("Connected")
         
@@ -507,21 +526,28 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
             CircularSpinner.sharedInstance.pgColor = .tunnelsLightBlueColor
         })
         CircularSpinner.trackPgColor = UIColor.init(red: 91/255.0, green: 209/255.0, blue: 120/255.0, alpha: 1.0)
-        CircularSpinner.sharedInstance.type = .indeterminate
+        if CircularSpinner.sharedInstance.type == .determinate {
+            CircularSpinner.sharedInstance.type = .indeterminate
+        }
         self.vpnStatusLabel?.text = "INITIALIZING"
-        CircularSpinner.sharedInstance.appearanceProgressLayer()
+        //CircularSpinner.sharedInstance.appearanceProgressLayer()
         
     }
     
     func setVPNButtonConnecting() {
         DDLogInfo("Connecting")
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.vpnPowerButton?.tintColor = UIColor.gray
             self.vpnStatusLabel?.textColor = UIColor.white
             CircularSpinner.sharedInstance.pgColor = .tunnelsLightBlueColor
         })
         CircularSpinner.trackPgColor = UIColor.init(red: 91/255.0, green: 209/255.0, blue: 120/255.0, alpha: 1.0)
-        CircularSpinner.sharedInstance.type = .indeterminate
+        
+        if CircularSpinner.sharedInstance.type == .determinate {
+            CircularSpinner.sharedInstance.type = .indeterminate
+        }
+        
         self.vpnStatusLabel?.text = "CONNECTING".localized()
         CircularSpinner.sharedInstance.appearanceProgressLayer()
         
@@ -529,14 +555,17 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     
     func setVPNButtonDisabled() {
         DDLogInfo("DISCONNECTED")
+        
         UIView.animate(withDuration: 0.4, animations: {
             self.vpnPowerButton?.tintColor = UIColor.gray
             CircularSpinner.sharedInstance.pgColor = UIColor.gray
             self.vpnStatusLabel?.textColor = UIColor.white
         })
         
-        CircularSpinner.sharedInstance.type = .determinate
-        CircularSpinner.setValue(1.0, animated: true)
+        if CircularSpinner.sharedInstance.type == .indeterminate {
+            CircularSpinner.sharedInstance.type = .determinate
+        }
+        
         self.vpnStatusLabel?.text = "DISCONNECTED".localized()
     }
     

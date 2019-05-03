@@ -91,7 +91,7 @@ class InstallVPNViewController: BWWalkthroughViewController {
     @IBAction func installVPN() {
         if !isConnected {
             DDLogInfo("Installing VPN in Postboarding")
-            VPNController.connectToVPN()
+            VPNController.shared.connectToVPN()
         }
     }
     

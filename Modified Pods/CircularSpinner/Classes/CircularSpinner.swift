@@ -190,6 +190,13 @@ public class CircularSpinner: UIView {
         default:
             oldStrokeEnd = nil
             updateTitleLabel()
+            self.value = 1.0
+            self.updateTitleLabel()
+            self.setStrokeEnd(animated: true) {
+                if self.value >= 1 {
+                    //CircularSpinner.hide()
+                }
+            }
         }
     }
     
@@ -281,11 +288,13 @@ public class CircularSpinner: UIView {
         let spinner = CircularSpinner.sharedInstance
         guard spinner.type == .determinate else { return }
         
-        spinner.value = value
-        spinner.updateTitleLabel()
-        spinner.setStrokeEnd(animated: animated) {
-            if value >= 1 {
-                //CircularSpinner.hide()
+        if spinner.value != value {
+            spinner.value = value
+            spinner.updateTitleLabel()
+            spinner.setStrokeEnd(animated: animated) {
+                if value >= 1 {
+                    //CircularSpinner.hide()
+                }
             }
         }
     }

@@ -30,19 +30,10 @@ class CountrySelection: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func loadEndpoints() {
         items.removeAll()
-        
-        items.append(ServerEndpoint.init(countryName: "United States - West".localized(), flagImagePath: "usa_flag", countryCode: "us", endpoint: Global.endPoint(base: "us-west")))
-        items.append(ServerEndpoint.init(countryName: "United States - East".localized(), flagImagePath: "usa_flag", countryCode: "us", endpoint: Global.endPoint(base: "us-east")))
-        items.append(ServerEndpoint.init(countryName: "United Kingdom".localized(), flagImagePath: "great_brittain", countryCode: "uk", endpoint: Global.endPoint(base: "eu-london")))
-        items.append(ServerEndpoint.init(countryName: "Ireland".localized(), flagImagePath: "ireland_flag", countryCode: "irl", endpoint: Global.endPoint(base: "eu-ireland")))
-        items.append(ServerEndpoint.init(countryName: "Germany".localized(), flagImagePath: "germany_flag", countryCode: "de", endpoint: Global.endPoint(base: "eu-frankfurt")))
-        items.append(ServerEndpoint.init(countryName: "Canada".localized(), flagImagePath: "canada_flag", countryCode: "ca", endpoint: Global.endPoint(base: "canada")))
-        items.append(ServerEndpoint.init(countryName: "Japan".localized(), flagImagePath: "japan_flag", countryCode: "jp", endpoint: Global.endPoint(base: "ap-tokyo")))
-        items.append(ServerEndpoint.init(countryName: "Australia".localized(), flagImagePath: "australia_flag", countryCode: "au", endpoint: Global.endPoint(base: "ap-sydney")))
-        items.append(ServerEndpoint.init(countryName: "South Korea".localized(), flagImagePath: "korea_flag", countryCode: "kr", endpoint: Global.endPoint(base: "ap-seoul")))
-        items.append(ServerEndpoint.init(countryName: "Singapore".localized(), flagImagePath: "singapore_flag", countryCode: "sg", endpoint: Global.endPoint(base: "ap-singapore")))
-        items.append(ServerEndpoint.init(countryName: "India".localized(), flagImagePath: "india_flag", countryCode: "in", endpoint: Global.endPoint(base: "ap-mumbai")))
-        items.append(ServerEndpoint.init(countryName: "Brazil".localized(), flagImagePath: "brazil_flag", countryCode: "br", endpoint: Global.endPoint(base: "sa")))
+        items = (VPNController.shared.currentProtocol?.supportedRegions)!
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     
@@ -76,8 +67,9 @@ class CountrySelection: NSObject, UITableViewDataSource, UITableViewDelegate {
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
         let cell = CountryTableViewCell.init()//tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let meta = regionMetadata[items[indexPath.row]]!
         
-        cell.imageView?.image = UIImage.init(named: items[indexPath.row].flagImagePath)
+        cell.imageView?.image = UIImage.init(named: meta.flagImagePath)
         if UI_USER_INTERFACE_IDIOM() == .pad {
             cell.textLabel?.font = UIFont.init(name: "AvenirNext-Regular", size: 16)
         }
@@ -92,11 +84,11 @@ class CountrySelection: NSObject, UITableViewDataSource, UITableViewDelegate {
         cell.selectedBackgroundView = bgColorView
         
         
-        cell.textLabel?.text = items[indexPath.row].countryName
+        cell.textLabel?.text = meta.countryName
         return cell
     }
     
     //MARK: - VARIABLES
-    var items = [ServerEndpoint]() // = []
+    var items = [ServerRegion]() // = []
     let tableView = UITableView()
 }

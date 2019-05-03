@@ -11,6 +11,7 @@ import NetworkExtension
 import CloudKit
 import CocoaLumberjackSwift
 import Alamofire
+import PromiseKit
 
 class TodayViewController: UIViewController, NCWidgetProviding {
     //MARK: - OVERRIDES
@@ -25,25 +26,14 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         self.toggleVPN.layer.cornerRadius = self.toggleVPN.frame.size.width / 2.0
         self.toggleVPN?.tintColor = .tunnelsBlueColor
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object: NEVPNManager.shared().connection, queue: OperationQueue.main) { (notification) -> Void in
-            if NEVPNManager.shared().connection.status == .connected {
-                self.setVPNButtonConnected()
-            } else if NEVPNManager.shared().connection.status == .disconnected {
-                self.setVPNButtonDisconnected()
-            } else if NEVPNManager.shared().connection.status == .connecting {
-                self.setVPNButtonConnecting()
-            }
-            else if NEVPNManager.shared().connection.status == .disconnecting {
-                self.setVPNButtonDisconnecting()
-            }
-            DDLogInfo("VPN Status: \(NEVPNManager.shared().connection.status.rawValue)");
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnStatusDidChange(_:)), name: .vpnStatusChanged, object: nil)
         
         setupVPNButtons()
         if #available(iOSApplicationExtension 10.0, *) {
             self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
         }
-        
+        ipQueue.maxConcurrentOperationCount = 1
+        buttonUIQueue.maxConcurrentOperationCount = 1
     }
     
     @available(iOS 10.0, *)
@@ -99,68 +89,95 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
     }
     
-    @IBAction func toggleVPNButton(sender: UIButton) {
-        let manager = NEVPNManager.shared()
-        
-        if manager.isEnabled == false {
-            openApp()
-            return
+    @objc func vpnStatusDidChange(_ notification: Notification) {
+        let op = BlockOperation.init()
+        buttonUIQueue.cancelAllOperations()
+        op.addExecutionBlock {
+            sleep(2)
+            if op.isCancelled { return }
+            DispatchQueue.main.async {
+                self.setupVPNButtons()
+            }
         }
+        buttonUIQueue.addOperation(op)
         
-        self.toggleVPN.setImage(nil, for: .normal)
-        toggleVPN.startLoadingAnimation()
         
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            if manager.connection.status == .disconnected || manager.connection.status == .invalid {
-                self.startVPN()
+        DDLogInfo("VPN Status: \(NEVPNManager.shared().connection.status.rawValue)")
+    }
+    
+    @IBAction func toggleVPNButton(sender: UIButton) {
+        VPNController.shared.vpnState(completion: { status in
+            if TunnelsSubscription.isSubscribed != .NotSubscribed {
+                if status == .disconnected || status == .invalid {
+                    self.startVPN()
+                }
+                else {
+                    self.stopVPN()
+                }
             }
             else {
-                self.stopVPN()
+                self.openApp()
             }
         })
-      
     }
     
     func setupVPNButtons() {
-        let manager = NEVPNManager.shared()
-        manager.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            if manager.connection.status == .disconnected || manager.connection.status == .invalid {
+        VPNController.shared.vpnState(completion: { status in
+            if status == .disconnected || status == .invalid {
                 self.setVPNButtonDisconnected()
+                if status == .disconnected {
+                    self.determineIP()
+                }
             }
-            else if manager.connection.status == .connected {
+            else if status == .connected {
                 self.setVPNButtonConnected()
+                self.determineIP()
+            }
+            else if status == .disconnecting {
+                self.setVPNButtonDisconnecting()
             }
             else {
                 self.setVPNButtonConnecting()
             }
             self.toggleVPN.layer.cornerRadius = self.toggleVPN.frame.width / 2.0
         })
-        
-        determineIP()
     }
     
     func determineIP() {
-        self.ipAddress?.text = "IP".localized() + ": ..."
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        
+        ipQueue.cancelAllOperations()
+        
+        let op = BlockOperation.init()
+      
+        op.addExecutionBlock {
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                self.ipAddress?.text = "IP".localized() + ": ..."
+            })
+            usleep(1500000)
+            if op.isCancelled { return }
             let sessionManager = Alamofire.SessionManager.default
+            
             sessionManager.retrier = nil
             URLCache.shared.removeAllCachedResponses()
-            sessionManager.request(Global.getIPURL, method: .get).responseJSON { response in
-                switch response.result {
-                case .success:
-                    if let json = response.result.value as? [String: Any], let publicIPAddress = json["ip"] as? String {
-                        print(publicIPAddress)
+            
+            sessionManager.requestWithoutCache(Global.getIPURL, method: .get, parameters: ["random" : arc4random_uniform(10000000)]).validate().responseJSON()
+                .done { json, response in
+                    if op.isCancelled { return }
+                    if response.response?.statusCode == 200 , let js = json as? Dictionary<String, Any>, let publicIPAddress = js["ip"] as? String {
                         self.ipAddress?.text = publicIPAddress
                     }
                     else {
-                        self.ipAddress?.text = "IP".localized() + ": N/A"
+                        DDLogError("Error loading IP Address")
+                        self.ipAddress?.text = "IP".localized() + ": ..."
                     }
-                case .failure(let error):
-                    DDLogError("Error loading IP Address \(error)")
-                    self.ipAddress?.text = "IP".localized() + ": N/A"
                 }
+                .catch { error in
+                    DDLogError("Error loading IP Address \(error)")
+                    self.ipAddress?.text = "IP".localized() + ": ..."
             }
-        })
+        }
+        
+        ipQueue.addOperation(op)
     }
     
     func openApp() {
@@ -177,7 +194,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         self.toggleVPN.layer.cornerRadius = self.toggleVPN.frame.width / 2.0
         let image = UIImage.powerIconPadded
         toggleVPN?.setImage(image, for: .normal)
-        determineIP()
         UIView.transition(with: self.vpnStatusLabel,
                           duration: 0.25,
                           options: .transitionCrossDissolve,
@@ -194,7 +210,6 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let image = UIImage.powerIconPadded
         toggleVPN?.setImage(image, for: .normal)
         UIView.setAnimationsEnabled(true)
-        determineIP()
         UIView.transition(with: self.vpnStatusLabel,
                          duration: 0.25,
                          options: .transitionCrossDissolve,
@@ -226,8 +241,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func startVPN() {
-        VPNController.connectToVPN()
+        VPNController.shared.connectToVPN()
         createRemoteRecord(recordName: Global.kOpenTunnelRecord)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: {
+            self.setVPNButtonConnecting()
+        })
     }
     
     func createRemoteRecord(recordName : String) {
@@ -247,13 +265,19 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     }
     
     func stopVPN() {
-        VPNController.disconnectFromVPN()
+        VPNController.shared.disconnectFromVPN()
         createRemoteRecord(recordName: Global.kCloseTunnelRecord)
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+            self.setVPNButtonDisconnecting()
+        })
     }
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
         completionHandler(NCUpdateResult.newData)
     }
+    
+    var ipQueue : OperationQueue = OperationQueue() //used to only use the latest IP requeest
+    var buttonUIQueue : OperationQueue = OperationQueue() //used to not make the button flicker on many OS notifications
     
     //MARK: - VARIABLES
     @IBOutlet weak var toggleVPN: TKTransitionSubmitButton!

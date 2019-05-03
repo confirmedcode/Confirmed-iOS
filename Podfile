@@ -1,7 +1,7 @@
 inhibit_all_warnings!
 use_frameworks!
 
-platform :ios, '9.0'
+platform :ios, '11.0'
 
 target :'Confirmed VPN' do
     pod 'ReachabilitySwift'
@@ -21,6 +21,7 @@ target :'Confirmed VPN' do
     pod 'NVActivityIndicatorView'
     pod 'CocoaLumberjack'
     pod 'PopupDialog', '~> 0.9'
+    pod 'TunnelKit', '1.4.0'
 end
 
 
@@ -33,7 +34,7 @@ target :'Confirmed Tunnels' do
     pod 'Alamofire'
     pod 'SwiftyStoreKit', '0.13.1'
     pod 'ReachabilitySwift'
-    
+    pod 'TunnelKit', '1.4.0'
 end
 
 target :'Today' do
@@ -44,7 +45,7 @@ target :'Today' do
     pod 'KeychainAccess'
     pod 'CocoaLumberjack'
     pod 'ReachabilitySwift'
-    
+    pod 'TunnelKit', '1.4.0'
 end
 
 post_install do |installer| 

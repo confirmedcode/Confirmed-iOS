@@ -185,7 +185,7 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
     
     //MARK: - ACTION
     func setupIPAddressUpdater() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NEVPNStatusDidChange, object: NEVPNManager.shared().connection, queue: OperationQueue.main) { (notification) -> Void in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.vpnStatusChanged, object: nil, queue: OperationQueue.main) { (notification) -> Void in
             if NEVPNManager.shared().connection.status == .connected || NEVPNManager.shared().connection.status == .disconnected {
                 self.ipAddress?.text = "..."
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
