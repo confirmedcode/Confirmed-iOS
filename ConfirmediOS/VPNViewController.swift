@@ -184,7 +184,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
             self.vpnPowerButton?.isEnabled = true
         }
         
-        TunnelsSubscription.refreshAndUploadReceipt()
     }
     
     func updateActiveCountry() {

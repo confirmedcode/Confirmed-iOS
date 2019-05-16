@@ -21,6 +21,12 @@ class IPSecV3: NSObject, ConfirmedVPNProtocol {
         let endpoint = endpointForRegion(region: savedRegion)
         let localId = Global.keychain[Global.kConfirmedID]
         let p12base64 = Global.keychain[Global.kConfirmedP12Key]
+        
+        if localId == nil || p12base64 == nil {
+            completion(NSError.init(domain: "Confirmed VPN", code: 1, userInfo: nil))
+            return
+        }
+        
         let p12Data = Data(base64Encoded: p12base64!)
             
         ipsecManager?.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
@@ -221,9 +227,14 @@ class IPSecV3: NSObject, ConfirmedVPNProtocol {
     }
     
     func getStatus(completion: @escaping (_ status: NEVPNStatus) -> Void) -> Void {
-        self.ipsecManager?.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
-            completion(self.ipsecManager?.connection.status ?? .invalid)
-        })
+        if self.ipsecManager == nil {
+            completion(.invalid)
+        }
+        else {
+            self.ipsecManager?.loadFromPreferences(completionHandler: {(_ error: Error?) -> Void in
+                completion(self.ipsecManager?.connection.status ?? .invalid)
+            })
+        }
     }
     
     var ipsecManager: NEVPNManager?
