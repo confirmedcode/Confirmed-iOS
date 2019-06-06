@@ -164,7 +164,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 .done { json, response in
                     if op.isCancelled { return }
                     if response.response?.statusCode == 200 , let js = json as? Dictionary<String, Any>, let publicIPAddress = js["ip"] as? String {
-                        self.ipAddress?.text = publicIPAddress
+                        self.ipAddress?.text = "IP".localized() + ": " + publicIPAddress
                     }
                     else {
                         DDLogError("Error loading IP Address")

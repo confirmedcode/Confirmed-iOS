@@ -5,7 +5,7 @@ platform :ios, '11.0'
 
 target :'Confirmed VPN' do
     pod 'ReachabilitySwift'
-    pod 'SwiftMessages'
+    pod 'SwiftMessages', '6.0.0'
     pod 'PromiseKit'
     pod 'PromiseKit/Alamofire', '~> 6.0'
     pod 'SwiftyStoreKit', '0.13.1'

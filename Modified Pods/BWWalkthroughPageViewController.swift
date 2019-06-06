@@ -69,6 +69,13 @@ open class BWWalkthroughPageViewController: ConfirmedBaseViewController, BWWalkt
         }
     }
     
+    @IBAction func openAuditReports(_ sender: Any) {
+        guard let url = URL(string: "https://openlyoperated.org/report/confirmedvpn") else {
+            return //be safe
+        }
+        UIApplication.shared.openURL(url)
+    }
+    
     // MARK: BWWalkthroughPage Implementation
 
     override open func viewDidLoad() {

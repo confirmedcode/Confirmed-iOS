@@ -18,11 +18,16 @@ class PrivacyPolicyViewController: ConfirmedBaseViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     //MARK: - ACTION
     @IBAction func goToPrivacyPolicy () {
         dismissView()
         UIApplication.shared.open(URL(string: "https://confirmedvpn.com/privacy.html")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+    }
+    
+    @IBAction func goToAuditReports(_ sender: Any) {
+        dismissView()
+        UIApplication.shared.open(URL(string: "https://openlyoperated.org/report/confirmedvpn")!, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
     
     @IBAction func dismissView() {
