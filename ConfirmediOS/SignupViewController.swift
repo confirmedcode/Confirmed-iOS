@@ -344,9 +344,9 @@ class SignupViewController: ConfirmedBaseViewController {
     }
     
     func segmentioOptions() -> SegmentioOptions {
-        var font = UIFont.init(name: "AvenirNext-Regular", size: 14)
+        var font = UIFont.init(name: "Montserrat-Regular", size: 14)
         if UIDevice.current.userInterfaceIdiom == .pad {
-            font = UIFont.init(name: "AvenirNext-Regular", size: 20)
+            font = UIFont.init(name: "Montserrat-Regular", size: 20)
         }
         return SegmentioOptions(
             backgroundColor: .clear,

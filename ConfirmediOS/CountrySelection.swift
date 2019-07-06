@@ -71,10 +71,10 @@ class CountrySelection: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         cell.imageView?.image = UIImage.init(named: meta.flagImagePath)
         if UI_USER_INTERFACE_IDIOM() == .pad {
-            cell.textLabel?.font = UIFont.init(name: "AvenirNext-Regular", size: 16)
+            cell.textLabel?.font = UIFont.init(name: "Montserrat-Regular", size: 16)
         }
         else {
-            cell.textLabel?.font = UIFont.init(name: "AvenirNext-Regular", size: 14)
+            cell.textLabel?.font = UIFont.init(name: "Montserrat-Regular", size: 14)
         }
         cell.textLabel?.textColor = UIColor.init(white: 0.25, alpha: 1.0)
         cell.imageView?.contentMode = .scaleToFill

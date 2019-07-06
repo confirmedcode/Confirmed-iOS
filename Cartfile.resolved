@@ -1,5 +1,5 @@
-git "git@github.com:/confirmedcode/AppleSharedLib.git" "3bde44a2160dff2e38dfc407e51daf25fa79bc6b"
-github "CocoaLumberjack/CocoaLumberjack" "3.5.2"
+git "git@github.com:/confirmedcode/AppleSharedLib.git" "d97c3091c0e48cff462f3ab7c995bebe1e31f742"
+github "CocoaLumberjack/CocoaLumberjack" "3.5.3"
 github "behrang/YamlSwift" "3.4.3"
 github "lexrus/MMDB-Swift" "0.3.0"
 github "robbiehanson/CocoaAsyncSocket" "7.6.3"

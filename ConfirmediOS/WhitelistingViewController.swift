@@ -128,11 +128,11 @@ class WhitelistingViewController: ConfirmedBaseViewController, UITableViewDataSo
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.size.width, height: 106))
         var label = UILabel(frame: CGRect.init(x: 24, y: 20, width: tableView.frame.size.width, height: 24))
-        label.font = UIFont.init(name: "AvenirNext-Medium", size: 14)
+        label.font = UIFont.init(name: "Montserrat-Medium", size: 14)
         
         if UI_USER_INTERFACE_IDIOM() == .pad {
             label = UILabel(frame: CGRect.init(x: 84, y: 20, width: tableView.frame.size.width, height: 24))
-            label.font = UIFont.init(name: "AvenirNext-Medium", size: 18)
+            label.font = UIFont.init(name: "Montserrat-Medium", size: 18)
         }
         
         label.textColor = UIColor.darkGray
@@ -155,27 +155,31 @@ class WhitelistingViewController: ConfirmedBaseViewController, UITableViewDataSo
         
         
         var whitelistedKey = "whitelisted_domains"
+        var domainsArray = Utils.getConfirmedWhitelistAsArray();
         if indexPath.section == 0 && !isPostboarding {
-            whitelistedKey = "whitelisted_domains_user"
+            whitelistedKey = "whitelisted_domains_user";
+            domainsArray = Utils.getUserWhitelistAsArray();
         }
         
         if let defaults = UserDefaults(suiteName: "group.com.confirmed") {
-            if let domains = defaults.dictionary(forKey:whitelistedKey) {
-                if let domainArray = Array(domains.keys) as? Array<String>, let statusArray = Array(domains.values) as? Array<NSNumber> {
-                    if domainArray.count > indexPath.row {
-                        if statusArray[indexPath.row].boolValue {
-                            Utils.setKeyForDefaults(inDomain: domains, key: domainArray[indexPath.row], val: NSNumber.init(value: false), defaultKey: whitelistedKey)
-                        }
-                        else {
-                            Utils.setKeyForDefaults(inDomain: domains, key: domainArray[indexPath.row], val: NSNumber.init(value: true), defaultKey: whitelistedKey)
-                        }
+            if let domains = defaults.dictionary(forKey: whitelistedKey) {
+                // get the domain name we're referring to
+                if domainsArray.count > indexPath.row {
+                    var domainItem = domainsArray[indexPath.row];
+                    // set that domain in the userdefaults
+                    if (domainItem.1 as AnyObject).boolValue {
+                        Utils.setKeyForDefaults(inDomain: domains, key: domainItem.0, val: NSNumber.init(value: false), defaultKey: whitelistedKey)
+                    }
+                    else {
+                        Utils.setKeyForDefaults(inDomain: domains, key: domainItem.0, val: NSNumber.init(value: true), defaultKey: whitelistedKey)
                     }
                 }
             }
         }
-        
+
         VPNController.shared.reloadWhitelistRules()
         tableView.reloadData()
+
     }
     
     @objc func didSelectTextField(textField: UITextField) {
@@ -220,30 +224,25 @@ class WhitelistingViewController: ConfirmedBaseViewController, UITableViewDataSo
                 return cell
             }
             else {
-                let domains = Utils.getUserWhitelist()
-                let domainArray = Array(domains.keys)
-                let statusArray = Array(domains.values)
-                if (domainArray.count) > indexPath.row {
+                let domains = Utils.getUserWhitelistAsArray()
+                if domains.count > indexPath.row {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "whitelistedDomainCell", for: indexPath) as! WhitelistCell
-                    
                     
                     let backgroundView = UIView()
                     backgroundView.backgroundColor = UIColor.init(red: 0/255.0, green: 173/255.0, blue: 231/255.0, alpha: 1.0)
                     cell.selectedBackgroundView = backgroundView
                     
-                    let domainLabel = cell.whitelistDomain
-                    let statusLabel = cell.whitelistStatus
-                    domainLabel?.text = domainArray[indexPath.row]
-                    if (statusArray[indexPath.row] as AnyObject).boolValue {
-                        statusLabel?.text = "Whitelisted".localized()
+                    let domain = domains[indexPath.row];
+                    cell.whitelistDomain?.text = domain.0;
+                    if ((domain.1 as AnyObject).boolValue) {
+                        cell.whitelistStatus?.text = "Whitelisted".localized();
                     }
                     else {
-                        statusLabel?.text = "Not Whitelisted".localized()
+                        cell.whitelistStatus?.text = "Not Whitelisted".localized();
                     }
-                    
-                    domainLabel?.highlightedTextColor = UIColor.white
-                    statusLabel?.highlightedTextColor = UIColor.white
-                    
+                    cell.whitelistDomain?.highlightedTextColor = UIColor.white
+                    cell.whitelistStatus?.highlightedTextColor = UIColor.white
+                        
                     return cell
                 }
             }
@@ -254,26 +253,19 @@ class WhitelistingViewController: ConfirmedBaseViewController, UITableViewDataSo
         backgroundView.backgroundColor = UIColor.init(red: 0/255.0, green: 173/255.0, blue: 231/255.0, alpha: 1.0)
         cell.selectedBackgroundView = backgroundView
         
-        let domains = Utils.getConfirmedWhitelist()
-        let domainArray = Array(domains.keys)
-        let statusArray = Array(domains.values)
-        
-        if domainArray.count > indexPath.count {
-            let domainLabel = cell.whitelistDomain
-            let statusLabel = cell.whitelistStatus
-            domainLabel?.text = domainArray[indexPath.row]
-            if (statusArray[indexPath.row] as AnyObject).boolValue {
-                statusLabel?.text = "Whitelisted".localized()
+        let domains = Utils.getConfirmedWhitelistAsArray()
+        if domains.count > indexPath.count {
+            let domain = domains[indexPath.row];
+            cell.whitelistDomain?.text = domain.0;
+            if ((domain.1 as AnyObject).boolValue) {
+                cell.whitelistStatus?.text = "Whitelisted".localized();
             }
             else {
-                statusLabel?.text = "Not Whitelisted".localized()
+                cell.whitelistStatus?.text = "Not Whitelisted".localized();
             }
-            
-            domainLabel?.highlightedTextColor = UIColor.white
-            statusLabel?.highlightedTextColor = UIColor.white
+            cell.whitelistDomain?.highlightedTextColor = UIColor.white
+            cell.whitelistStatus?.highlightedTextColor = UIColor.white
         }
-        
-    
         
         return cell
     }

@@ -9,11 +9,9 @@
 
 import UIKit
 import NetworkExtension
-import Armchair
 import LGSideMenuController
 import StoreKit
 import MessageUI
-import RevealingSplashView
 import StoreKit
 import AVFoundation
 import AVKit
@@ -39,13 +37,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         self.performSegue(withIdentifier: "showContentBlockerPage", sender: self)
     }
     
-    @objc func installWidget() {
-        DispatchQueue.main.async {
-            self.hideLeftViewAnimated(self)
-            self.performSegue(withIdentifier: "showAddWidget", sender: self)
-        }
-    }
-    
     @objc func showAccount() {
         DispatchQueue.main.async {
             self.hideLeftViewAnimated(self)
@@ -59,29 +50,23 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         DispatchQueue.main.async {
             self.hideLeftViewAnimated(self)
             
-            self.speedTestLabel?.text = "... Mbps"
-            self.speedTestLabel?.alpha = 0.5
-            self.speedTestIcon?.alpha = 0.5
+            self.speedTestLabel?.text = "Running Speed Test..."
+            self.speedTestLabel?.alpha = 0.2
             
-            UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat], animations: {
+            UIView.animate(withDuration: 0.65, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat], animations: {
                 self.speedTestLabel?.alpha = 1.0
-                self.speedTestIcon?.alpha = 1.0
             })
-            
-            
             
             TunnelSpeed().testDownloadSpeedWithTimout(timeout: 10.0) { (megabytesPerSecond, error) -> () in
                 if megabytesPerSecond > 0 {
                     
                     DispatchQueue.main.async {
                         self.speedTestLabel?.layer.removeAllAnimations()
-                        self.speedTestIcon?.layer.removeAllAnimations()
                         self.speedTestLabel?.text = String(format: "%.1f", megabytesPerSecond)
                             + " Mbps"
                         
                         UIView.animate(withDuration: 0.4, delay: 0, options: [.curveEaseInOut], animations: {
                             self.speedTestLabel?.alpha = 1.0
-                            self.speedTestIcon?.alpha = 1.0
                         })
                     }
                     
@@ -126,9 +111,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         
         Utils.checkForSwitchedEnvironments()
         Utils.setupWhitelistedDomains()
-        showSplashView()
         self.speedTestLabel?.alpha = 0
-        self.speedTestIcon?.alpha = 0
         
         //check subscription
         let image = UIImage(named: "power_button")?.withRenderingMode(.alwaysTemplate)
@@ -139,13 +122,11 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(dismissOnboarding), name: .dismissOnboarding, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(rateApp), name: NSNotification.Name(rawValue: "Rate App"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(shareApp), name: NSNotification.Name(rawValue: "Share App"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(askForHelp), name: NSNotification.Name(rawValue: "Ask For Help"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPrivacyPolicy), name: NSNotification.Name(rawValue: "Show Privacy Policy"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startSpeedTest), name: .runSpeedTest, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showAccount), name: NSNotification.Name(rawValue: "Show Account"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(installWidget), name: .installWidget, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(VPNViewController.didSelectCountry(notification:)), name: .changeCountry, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showWhitelisting), name: .showWhitelistDomains, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showContentBlocker), name: .showContentBlocker, object: nil)
@@ -224,6 +205,8 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
             //self.countrySelectionButton?.frame = CGRect(x: 0, y: self.view.frame.height - (self.countrySelectionButton?.frame.size.height)!, width: (self.countrySelectionButton?.frame.size.width)!, height: (self.countrySelectionButton?.frame.size.height)!)
             self.countrySelection.tableView.frame = CGRect(x: 0, y: self.view.frame.height, width: (self.countrySelection.tableView.frame.size.width), height: (self.countrySelection.tableView.frame.size.height))
             self.sideMenuButton?.alpha = 1.0
+            self.sideOOButton?.alpha = 1.0
+            self.countryLine?.alpha = 0.0
             self.countryArrowButton?.transform = CGAffineTransform(rotationAngle: 0)
         })
     }
@@ -327,6 +310,8 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
             
             self.countrySelection.tableView.frame = CGRect(x: 0, y: max(size.height, size.width), width: size.width, height: (self.countrySelection.tableView.frame.size.height))
             self.sideMenuButton?.alpha = 1.0
+            self.sideOOButton?.alpha = 1.0
+            self.countryLine?.alpha = 0.0
             self.countryArrowButton?.transform = CGAffineTransform(rotationAngle: 0)
         })
         
@@ -341,6 +326,8 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
                 
                 self.countrySelection.tableView.frame = CGRect(x: 0, y: self.view.frame.height, width: (self.countrySelection.tableView.frame.size.width), height: (self.countrySelection.tableView.frame.size.height))
                 self.sideMenuButton?.alpha = 1.0
+                self.sideOOButton?.alpha = 1.0
+                self.countryLine?.alpha = 0.0
                 self.countryArrowButton?.transform = CGAffineTransform(rotationAngle: 0)
             })
         }
@@ -364,6 +351,8 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
                 
                 self.countrySelection.tableView.frame = CGRect(x: 0, y: /*self.view.frame.height - */ (self.countrySelectionButton?.frame.size.height)! + heightAdjustment, width: (self.countrySelectionButton?.frame.size.width)!, height: (self.view.frame.size.height - heightAdjustment - (self.countrySelectionButton?.frame.size.height)!))
                 self.sideMenuButton?.alpha = 0.0
+                self.sideOOButton?.alpha = 0.0
+                self.countryLine?.alpha = 1.0
                 self.countryArrowButton?.transform = CGAffineTransform(rotationAngle: 3.1415)
             })
         }
@@ -373,7 +362,34 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     
     }
     
+    @IBAction func showAuditAsk(_ sender: Any) {
+        guard let url = URL(string: "https://openlyoperated.org/report/confirmedvpn") else {
+            return //be safe
+        }
+        UIApplication.shared.openURL(url)
+    }
+    
     @IBAction func toggleVPN() {
+        
+        // If greater than 3 days since install, then ask for rating. Otherwise, check if 8th time connecting.
+        if let installDate = (try! FileManager.default.attributesOfItem(atPath: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last!.path)[FileAttributeKey.creationDate]) as? Date {
+            print("This app was installed on \(installDate)")
+            if let daysSinceInstall = Calendar.current.dateComponents([.day], from: installDate, to: Date()).day {
+                print("Days since install \(daysSinceInstall)");
+                if (daysSinceInstall > 3) {
+                    SKStoreReviewController.requestReview();
+                }
+                else {
+                    let ratingCount = UserDefaults.standard.integer(forKey: "rating")
+                    print("Rating Count: " + String(ratingCount));
+                    UserDefaults.standard.set(ratingCount + 1, forKey: "rating");
+                    if (ratingCount != 0 && ratingCount % 8 == 0) {
+                        SKStoreReviewController.requestReview();
+                    }
+                }
+            }
+        }
+        
         VPNController.shared.vpnState(completion: { status in
             if status == .disconnected || status == .invalid {
                 self.startVPN()
@@ -594,34 +610,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         self.sendSupportRequest()
     }
     
-    @objc func rateApp() {
-        hideLeftViewAnimated(self)
-        
-        if #available(iOS 10.3, *) {
-            SKStoreReviewController .requestReview()
-        } else {
-            Armchair.rateApp()
-        }
-        
-        return
-        
-        let alert = UIAlertController(title: "Recommend Tunnels", message: "How likely are you to recommend duet to a friend?", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Very likely", style: UIAlertAction.Style.default, handler: { action in
-            if #available(iOS 10.3, *) {
-                SKStoreReviewController .requestReview()
-            } else {
-                Armchair.rateApp()
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Not likely", style: UIAlertAction.Style.default, handler: { action in
-            //ask to e-mail
-            self.sendSupportRequest()
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     @objc func showPrivacyPolicy() {
         hideLeftViewAnimated(self)
         self.performSegue(withIdentifier: "showPrivacyPolicy", sender: nil)
@@ -646,22 +634,10 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         self.present(avc, animated: true, completion: nil)
     }
     
-    func showSplashView() {
-        let revealingSplashView = RevealingSplashView(iconImage: UIImage(named: "ios-marketing")!,iconInitialSize: CGSize(width: 150, height: 150), backgroundColor: UIColor(red:1.0, green:1.0, blue:1.0, alpha:1.0))
-        revealingSplashView.animationType = .rotateOut
-        revealingSplashView.center.x = self.view.center.x
-        revealingSplashView.center.y = self.view.center.y
-        revealingSplashView.delay = 1.0
-        revealingSplashView.duration = 0.75
-        self.view.addSubview(revealingSplashView)
-        
-        revealingSplashView.startAnimation(){
-            DDLogInfo("Completed")
-        }
-    }
-    
     //MARK: - VARIABLES
     
+    @IBOutlet weak var countryLine: UIView!
+    @IBOutlet weak var sideOOButton: UIButton!
     @IBOutlet weak var countryArrowButton: UIImageView?
     @IBOutlet weak var sideMenuButton: UIButton?
     @IBOutlet weak var vpnPowerButton: UIButton?
@@ -675,7 +651,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
     @IBOutlet weak var countrySelectionLayout: NSLayoutConstraint?
     
     @IBOutlet weak var speedTestLabel: UILabel?
-    @IBOutlet weak var speedTestIcon: UIImageView?
     
     @IBOutlet weak var vpnBenefitsButton: UIButton?
     

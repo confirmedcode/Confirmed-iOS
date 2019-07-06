@@ -19,7 +19,6 @@ extension Notification.Name {
     static let showPrivacyPolicy = Notification.Name("Show Privacy Policy")
     static let showTutorial = Notification.Name("Show Tutorial")
     static let runSpeedTest = Notification.Name("Run Speed Test")
-    static let installWidget = Notification.Name("Install Widget")
     static let showWhitelistDomains = Notification.Name("Show White Listing Domain")
     static let eulaPolicyAgreed = Notification.Name("EULA Policy Agreed")
     static let eulaPolicyDisagreed = Notification.Name("EULA Policy Disagreed")

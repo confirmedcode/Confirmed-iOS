@@ -8,6 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		1D1A3D208998E194C020B353 /* Pods_Today.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498BB228C9E2F1FA4AECBD3F /* Pods_Today.framework */; };
+		3D62CA3822C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3222C71E0D00A4E663 /* Montserrat-SemiBold.ttf */; };
+		3D62CA3922C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3222C71E0D00A4E663 /* Montserrat-SemiBold.ttf */; };
+		3D62CA3A22C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3222C71E0D00A4E663 /* Montserrat-SemiBold.ttf */; };
+		3D62CA3B22C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3222C71E0D00A4E663 /* Montserrat-SemiBold.ttf */; };
+		3D62CA3C22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3322C71E0E00A4E663 /* Montserrat-Bold.ttf */; };
+		3D62CA3D22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3322C71E0E00A4E663 /* Montserrat-Bold.ttf */; };
+		3D62CA3E22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3322C71E0E00A4E663 /* Montserrat-Bold.ttf */; };
+		3D62CA3F22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3322C71E0E00A4E663 /* Montserrat-Bold.ttf */; };
+		3D62CA4022C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3422C71E0E00A4E663 /* Montserrat-Regular.ttf */; };
+		3D62CA4122C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3422C71E0E00A4E663 /* Montserrat-Regular.ttf */; };
+		3D62CA4222C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3422C71E0E00A4E663 /* Montserrat-Regular.ttf */; };
+		3D62CA4322C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3422C71E0E00A4E663 /* Montserrat-Regular.ttf */; };
+		3D62CA4422C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3522C71E0E00A4E663 /* Montserrat-Thin.ttf */; };
+		3D62CA4522C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3522C71E0E00A4E663 /* Montserrat-Thin.ttf */; };
+		3D62CA4622C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3522C71E0E00A4E663 /* Montserrat-Thin.ttf */; };
+		3D62CA4722C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3522C71E0E00A4E663 /* Montserrat-Thin.ttf */; };
+		3D62CA4822C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3622C71E0E00A4E663 /* Montserrat-Medium.ttf */; };
+		3D62CA4922C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3622C71E0E00A4E663 /* Montserrat-Medium.ttf */; };
+		3D62CA4A22C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3622C71E0E00A4E663 /* Montserrat-Medium.ttf */; };
+		3D62CA4B22C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3622C71E0E00A4E663 /* Montserrat-Medium.ttf */; };
+		3D62CA4C22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3722C71E0E00A4E663 /* Montserrat-Light.ttf */; };
+		3D62CA4D22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3722C71E0E00A4E663 /* Montserrat-Light.ttf */; };
+		3D62CA4E22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3722C71E0E00A4E663 /* Montserrat-Light.ttf */; };
+		3D62CA4F22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D62CA3722C71E0E00A4E663 /* Montserrat-Light.ttf */; };
+		3DF6A67C22CC6D89006B0205 /* glasses@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DF6A67B22CC6D89006B0205 /* glasses@2x.png */; };
 		A101106D202B9D4300807612 /* ConfirmedBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A101106C202B9D4300807612 /* ConfirmedBaseViewController.swift */; };
 		A10805292027B88300F5AD37 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10805282027B88300F5AD37 /* SignInViewController.swift */; };
 		A1141A151F46230500F54698 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1141A141F46230500F54698 /* AppDelegate.swift */; };
@@ -142,9 +167,6 @@
 		A1DD82BE1FE446CA00482632 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1141A1B1F46230500F54698 /* Assets.xcassets */; };
 		A1E7481A1F9108B6004B8021 /* TunnelSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E748191F9108B6004B8021 /* TunnelSpeed.swift */; };
 		A1E78D13207BE58C007FAE70 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1E78D12207BE58C007FAE70 /* CloudKit.framework */; };
-		A1E9120F1FE5584100C236DB /* IMG_D350EEDEB9A8-1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A1E9120E1FE5584100C236DB /* IMG_D350EEDEB9A8-1.jpeg */; };
-		A1E912111FE55B1C00C236DB /* IMG_F26CD38DA8D8-1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A1E912101FE55B1B00C236DB /* IMG_F26CD38DA8D8-1.jpeg */; };
-		A1E912131FE55CBE00C236DB /* AddWidgetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E912121FE55CBE00C236DB /* AddWidgetViewController.swift */; };
 		A1EBEACB2097AE6E002B9087 /* M13CheckboxDisclosurePathGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EBEAB82097AE5B002B9087 /* M13CheckboxDisclosurePathGenerator.swift */; };
 		A1EBEACC2097AE6E002B9087 /* M13CheckboxDotController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EBEAB92097AE5B002B9087 /* M13CheckboxDotController.swift */; };
 		A1EBEACD2097AE6E002B9087 /* M13CheckboxFadeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EBEABA2097AE5B002B9087 /* M13CheckboxFadeController.swift */; };
@@ -164,7 +186,6 @@
 		A1EBEADB2097AE6E002B9087 /* M13CheckboxAnimationGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EBEAC82097AE6A002B9087 /* M13CheckboxAnimationGenerator.swift */; };
 		A1EBEADC2097AE6E002B9087 /* DefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EBEAC92097AE6C002B9087 /* DefaultValues.swift */; };
 		A1EBEADD2097AE6E002B9087 /* M13CheckboxStrokeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EBEACA2097AE6D002B9087 /* M13CheckboxStrokeController.swift */; };
-		A1EDF8DA1FE56BC800F5889D /* IMG_273507FA7DE5-1.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = A1EDF8D91FE56BC800F5889D /* IMG_273507FA7DE5-1.jpeg */; };
 		A1F3FB631F4E19BD001ED22C /* CircularSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3FB5F1F4E19BD001ED22C /* CircularSpinner.swift */; };
 		A1F3FB641F4E19BD001ED22C /* CircularSpinner.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1F3FB601F4E19BD001ED22C /* CircularSpinner.xib */; };
 		A1F4C45320964D2600AC004C /* FeaturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F4C45220964D2600AC004C /* FeaturesViewController.swift */; };
@@ -246,11 +267,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D62CA3222C71E0D00A4E663 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		3D62CA3322C71E0E00A4E663 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		3D62CA3422C71E0E00A4E663 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		3D62CA3522C71E0E00A4E663 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		3D62CA3622C71E0E00A4E663 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		3D62CA3722C71E0E00A4E663 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		3DF6A67B22CC6D89006B0205 /* glasses@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "glasses@2x.png"; sourceTree = "<group>"; };
 		428B4B342E5EA9720C08F150 /* Pods-Today.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Today/Pods-Today.debug.xcconfig"; sourceTree = "<group>"; };
 		498BB228C9E2F1FA4AECBD3F /* Pods_Today.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Today.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C50BEAA399D6FDF2C2672C6 /* Pods-Confirmed VPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Confirmed VPN.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Confirmed VPN/Pods-Confirmed VPN.debug.xcconfig"; sourceTree = "<group>"; };
 		4D422CB6539443825E5CD91B /* Pods-Confirmed Tunnels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Confirmed Tunnels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Confirmed Tunnels/Pods-Confirmed Tunnels.debug.xcconfig"; sourceTree = "<group>"; };
-		6EE3B447D3215CD7FD0B3EFD /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96179E9445306C33ADBDDFAB /* Pods-Today.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Today.release.xcconfig"; path = "Pods/Target Support Files/Pods-Today/Pods-Today.release.xcconfig"; sourceTree = "<group>"; };
 		A101106C202B9D4300807612 /* ConfirmedBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmedBaseViewController.swift; sourceTree = "<group>"; };
 		A10805282027B88300F5AD37 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -357,9 +384,6 @@
 		A1DBA19521B82F72008A9322 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		A1E748191F9108B6004B8021 /* TunnelSpeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TunnelSpeed.swift; sourceTree = "<group>"; };
 		A1E78D12207BE58C007FAE70 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		A1E9120E1FE5584100C236DB /* IMG_D350EEDEB9A8-1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "IMG_D350EEDEB9A8-1.jpeg"; sourceTree = "<group>"; };
-		A1E912101FE55B1B00C236DB /* IMG_F26CD38DA8D8-1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "IMG_F26CD38DA8D8-1.jpeg"; sourceTree = "<group>"; };
-		A1E912121FE55CBE00C236DB /* AddWidgetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWidgetViewController.swift; sourceTree = "<group>"; };
 		A1EBEAB82097AE5B002B9087 /* M13CheckboxDisclosurePathGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxDisclosurePathGenerator.swift; sourceTree = "<group>"; };
 		A1EBEAB92097AE5B002B9087 /* M13CheckboxDotController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxDotController.swift; sourceTree = "<group>"; };
 		A1EBEABA2097AE5B002B9087 /* M13CheckboxFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxFadeController.swift; sourceTree = "<group>"; };
@@ -379,7 +403,6 @@
 		A1EBEAC82097AE6A002B9087 /* M13CheckboxAnimationGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxAnimationGenerator.swift; sourceTree = "<group>"; };
 		A1EBEAC92097AE6C002B9087 /* DefaultValues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultValues.swift; sourceTree = "<group>"; };
 		A1EBEACA2097AE6D002B9087 /* M13CheckboxStrokeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = M13CheckboxStrokeController.swift; sourceTree = "<group>"; };
-		A1EDF8D91FE56BC800F5889D /* IMG_273507FA7DE5-1.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "IMG_273507FA7DE5-1.jpeg"; sourceTree = "<group>"; };
 		A1F07D4720A37FA8007CBA1B /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A1F3FB5F1F4E19BD001ED22C /* CircularSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularSpinner.swift; sourceTree = "<group>"; };
 		A1F3FB601F4E19BD001ED22C /* CircularSpinner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CircularSpinner.xib; sourceTree = "<group>"; };
@@ -470,10 +493,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D62CA3122C71DEC00A4E663 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3D62CA3322C71E0E00A4E663 /* Montserrat-Bold.ttf */,
+				3D62CA3722C71E0E00A4E663 /* Montserrat-Light.ttf */,
+				3D62CA3622C71E0E00A4E663 /* Montserrat-Medium.ttf */,
+				3D62CA3422C71E0E00A4E663 /* Montserrat-Regular.ttf */,
+				3D62CA3222C71E0D00A4E663 /* Montserrat-SemiBold.ttf */,
+				3D62CA3522C71E0E00A4E663 /* Montserrat-Thin.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		A1141A081F46230500F54698 = {
 			isa = PBXGroup;
 			children = (
 				A1DBA19521B82F72008A9322 /* LICENSE.md */,
+				3D62CA3122C71DEC00A4E663 /* Fonts */,
 				A17A6A2C202B44BB00657B9E /* Modified Pods */,
 				A11E78A21F6A33C5007499CA /* Shared */,
 				A1141A131F46230500F54698 /* ConfirmediOS */,
@@ -513,13 +550,11 @@
 				A1F4C45220964D2600AC004C /* FeaturesViewController.swift */,
 				A1141A141F46230500F54698 /* AppDelegate.swift */,
 				A1141A181F46230500F54698 /* Main.storyboard */,
+				3DF6A67B22CC6D89006B0205 /* glasses@2x.png */,
 				A121E81E20ADC36A00D003EF /* Localizable.strings */,
 				A12CA03F2079358B00BA3D82 /* ContentBlockerViewController.swift */,
 				A1141A1B1F46230500F54698 /* Assets.xcassets */,
-				A1EDF8D91FE56BC800F5889D /* IMG_273507FA7DE5-1.jpeg */,
 				A1912FE31F5655440007F6D4 /* ConfirmediOS-Bridging-Header.h */,
-				A1E9120E1FE5584100C236DB /* IMG_D350EEDEB9A8-1.jpeg */,
-				A1E912101FE55B1B00C236DB /* IMG_F26CD38DA8D8-1.jpeg */,
 				A15F3C731F79D90500B07F03 /* LaunchScreen.storyboard */,
 				A1141A201F46230500F54698 /* Info.plist */,
 				A11E78A31F6A359C007499CA /* Images */,
@@ -566,7 +601,6 @@
 				A1141A431F46233700F54698 /* NetworkExtension.framework */,
 				A1912FE91F58B2D00007F6D4 /* NotificationCenter.framework */,
 				A21525EDF4D5DA8CD8E4C27C /* Pods_Confirmed_VPN.framework */,
-				6EE3B447D3215CD7FD0B3EFD /* Pods_OneSignalNotificationServiceExtension.framework */,
 				498BB228C9E2F1FA4AECBD3F /* Pods_Today.framework */,
 				B3BE2E263A7FFAA28A4D30E1 /* Pods_Confirmed_Tunnels.framework */,
 			);
@@ -697,7 +731,6 @@
 			isa = PBXGroup;
 			children = (
 				A1CD1F1C1F782A1A006A43FE /* SideMenuViewController.swift */,
-				A1E912121FE55CBE00C236DB /* AddWidgetViewController.swift */,
 				A16A54ED202A527800512AE9 /* ConfirmedAccountViewController.swift */,
 				A18CCF251F7B416A0072D4A8 /* CountryTableViewCell.swift */,
 				A15F3C6F1F797FFF00B07F03 /* PrivacyPolicyViewController.swift */,
@@ -1069,17 +1102,21 @@
 				A1159FCC207C228300DA4670 /* privacyBlockList.json in Resources */,
 				A1159FCD207C228300DA4670 /* socialBlockList.json in Resources */,
 				A1159FCE207C228300DA4670 /* adBlockList.json in Resources */,
+				3DF6A67C22CC6D89006B0205 /* glasses@2x.png in Resources */,
 				A144658C1F7C2FB500F91C95 /* tunnels_gradient.png in Resources */,
-				A1EDF8DA1FE56BC800F5889D /* IMG_273507FA7DE5-1.jpeg in Resources */,
+				3D62CA3822C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */,
+				3D62CA4022C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */,
 				A15F3C7A1F7A0A3000B07F03 /* tunnel_icon.png in Resources */,
-				A1E912111FE55B1C00C236DB /* IMG_F26CD38DA8D8-1.jpeg in Resources */,
+				3D62CA4C22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */,
 				A172CB1D1F7AFA5300C85CBB /* tunnel_icon_transparent.png in Resources */,
-				A1E9120F1FE5584100C236DB /* IMG_D350EEDEB9A8-1.jpeg in Resources */,
+				3D62CA4422C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */,
 				A121E81C20ADC36A00D003EF /* Localizable.strings in Resources */,
+				3D62CA3C22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */,
 				A15F3C751F79DC8F00B07F03 /* LaunchScreen.storyboard in Resources */,
 				A1DBA19621B82F73008A9322 /* LICENSE.md in Resources */,
 				A1141A1C1F46230500F54698 /* Assets.xcassets in Resources */,
 				A1141A1A1F46230500F54698 /* Main.storyboard in Resources */,
+				3D62CA4822C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */,
 				A1F3FB641F4E19BD001ED22C /* CircularSpinner.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1102,7 +1139,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D62CA3D22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */,
+				3D62CA3922C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */,
 				A1DD82BE1FE446CA00482632 /* Assets.xcassets in Resources */,
+				3D62CA4922C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */,
+				3D62CA4D22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */,
+				3D62CA4122C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */,
+				3D62CA4522C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */,
 				A12473FA1FE44285008493B8 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1111,6 +1154,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D62CA4E22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */,
+				3D62CA4222C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */,
+				3D62CA4A22C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */,
+				3D62CA3E22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */,
+				3D62CA4622C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */,
+				3D62CA3A22C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1118,11 +1167,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D62CA4322C71E0E00A4E663 /* Montserrat-Regular.ttf in Resources */,
+				3D62CA4722C71E0E00A4E663 /* Montserrat-Thin.ttf in Resources */,
+				3D62CA3B22C71E0E00A4E663 /* Montserrat-SemiBold.ttf in Resources */,
 				A1159FCA207C201A00DA4670 /* socialBlockList.json in Resources */,
 				A1D85F07207C4C8300B766E0 /* adBlockListTwo.json in Resources */,
 				A1D85F09207C52A000B766E0 /* adBlockListThree.json in Resources */,
+				3D62CA4F22C71E0E00A4E663 /* Montserrat-Light.ttf in Resources */,
+				3D62CA4B22C71E0E00A4E663 /* Montserrat-Medium.ttf in Resources */,
 				A1159FCB207C201A00DA4670 /* privacyBlockList.json in Resources */,
 				A1931CFE20791F5900E695EB /* adBlockList.json in Resources */,
+				3D62CA3F22C71E0E00A4E663 /* Montserrat-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,7 +1259,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Confirmed VPN/Pods-Confirmed VPN-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/Armchair/Armchair.framework",
 				"${BUILT_PRODUCTS_DIR}/CNPPopupController/CNPPopupController.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
@@ -1215,7 +1269,6 @@
 				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
-				"${BUILT_PRODUCTS_DIR}/RevealingSplashView/RevealingSplashView.framework",
 				"${BUILT_PRODUCTS_DIR}/Segmentio/Segmentio.framework",
 				"${BUILT_PRODUCTS_DIR}/SkyFloatingLabelTextField/SkyFloatingLabelTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftMessages/SwiftMessages.framework",
@@ -1223,11 +1276,11 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
 				"${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Armchair.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CNPPopupController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
@@ -1238,7 +1291,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RevealingSplashView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Segmentio.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SkyFloatingLabelTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftMessages.framework",
@@ -1246,6 +1298,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyStoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TunnelKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1351,7 +1404,6 @@
 				A1EBEAD92097AE6E002B9087 /* M13CheckboxGestureRecognizer.swift in Sources */,
 				A154A07E215C78180010FFCC /* WhitelistCell.swift in Sources */,
 				A1EBEADC2097AE6E002B9087 /* DefaultValues.swift in Sources */,
-				A1E912131FE55CBE00C236DB /* AddWidgetViewController.swift in Sources */,
 				A154A06F215C6F5F0010FFCC /* AccountAddEmailCell.swift in Sources */,
 				A154A073215C70DA0010FFCC /* AccountUpgradeCell.swift in Sources */,
 				A1EBEAD02097AE6E002B9087 /* M13CheckboxController.swift in Sources */,

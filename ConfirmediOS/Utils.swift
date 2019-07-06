@@ -11,55 +11,6 @@ import NetworkExtension
 import CocoaLumberjackSwift
 import Alamofire
 
-@IBDesignable
-open class ConfirmedLabel : UILabel {
-    
-    var adjustediPhone5SFontSize : CGFloat = 12.0
-    var adjustediPhone8FontSize : CGFloat = 16.0
-    
-    @IBInspectable open var iPhone5SFontSize: CGFloat = 12.0 {
-        didSet {
-            adjustediPhone5SFontSize = iPhone5SFontSize
-            adjustFontToIPhone()
-        }
-    }
-    
-    @IBInspectable open var iPhone8FontSize: CGFloat = 16.0 {
-        didSet {
-            adjustediPhone8FontSize = iPhone8FontSize
-            adjustFontToIPhone()
-        }
-    }
-    
-    func adjustFontToIPhone() {
-        guard let font  = self.font else {
-            return
-        }
-        
-        if UIDevice().userInterfaceIdiom == .phone {
-            if UIScreen.main.nativeBounds.height <= 1136 {
-                let oldFontName = font.fontName
-                self.font = UIFont(name: oldFontName, size: adjustediPhone5SFontSize)
-            }
-            else if UIScreen.main.nativeBounds.height <= 1334 {
-                let oldFontName = font.fontName
-                self.font = UIFont(name: oldFontName, size: adjustediPhone8FontSize)
-            }
-        }
-        
-    }
-    
-    override open func awakeFromNib() {
-        super.awakeFromNib()
-        adjustFontToIPhone()
-    }
-    
-    override open func layoutSubviews() {
-        super.layoutSubviews()
-        adjustFontToIPhone()
-    }
-}
-
 extension Alamofire.SessionManager{
     @discardableResult
     open func requestWithoutCache(

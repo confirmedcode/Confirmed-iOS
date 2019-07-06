@@ -7,7 +7,6 @@
 
 import UIKit
 import NetworkExtension
-import Armchair
 import SwiftyStoreKit
 import KeychainAccess
 import SafariServices
@@ -35,9 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Auth.switchAPIVersion()
         //Auth.clearCookies()
         
-        
-        Armchair.appID("1286896061")
-        Armchair.affiliateCode("11l32tU")
         SFContentBlockerManager.reloadContentBlocker(
         withIdentifier: Global.contentBlockerBundleID) { (_ error: Error?) -> Void in
             if let err = error {

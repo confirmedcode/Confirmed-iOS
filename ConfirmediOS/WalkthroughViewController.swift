@@ -33,6 +33,8 @@ class WalkthroughViewController: BWWalkthroughViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        
         if currentMode == WalkthroughViewController.walkthroughMode {
             self.signinButton?.isHidden = true
             self.signupButton?.isHidden = true

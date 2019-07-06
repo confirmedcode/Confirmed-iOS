@@ -26,8 +26,9 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         if UIDevice().userInterfaceIdiom == .pad {
-            self.sideMenuController?.leftViewWidth = 400
+            self.sideMenuController?.leftViewWidth = 350
         }
         self.versionNumber?.text = Utils.getVersionString() //update for API version switches
     }
@@ -51,7 +52,7 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
             return 1 //account section
         }
         else {
-            return 7 //action section
+            return 6 //action section
         }
     }
 
@@ -89,7 +90,7 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
         let textLabel = cell.tableText!
         let imageView = cell.tableImage!
         
-        textLabel.font = UIFont.init(name: "AvenirNext-Regular", size: 18)
+        textLabel.font = UIFont.init(name: "Montserrat-Regular", size: 18)
 
         textLabel.textColor = .tunnelsBlueColor
         imageView.tintColor = .tunnelsBlueColor
@@ -118,12 +119,9 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
                 textLabel.text = Global.speedTestText
                 imageView.image = .lightningIconThick
             case 4:
-                textLabel.text = Global.installWidgetText
-                imageView.image = .installIcon
-            case 5:
                 textLabel.text = Global.whitelistingText
                 imageView.image = .checkIcon
-            case 6:
+            case 5:
                 textLabel.text = Global.contentBlockerText
                 imageView.image = .blockIcon
             default:
@@ -141,7 +139,6 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
         
         textLabel.textColor = UIColor.white
         imageView.tintColor = UIColor.white
-        
     }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
@@ -171,10 +168,8 @@ class SideMenuViewController: ConfirmedBaseViewController, UITableViewDelegate, 
                 self.dismiss(animated: true, completion: nil)
                 NotificationCenter.post(name: .runSpeedTest)
             case 4:
-                NotificationCenter.post(name: .installWidget)
-            case 5:
                 NotificationCenter.post(name: .showWhitelistDomains)
-            case 6:
+            case 5:
                 NotificationCenter.post(name: .showContentBlocker)
             default:
                 DDLogInfo("Unknown index path \(indexPath.row)")
