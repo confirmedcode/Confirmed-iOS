@@ -1,4 +1,4 @@
-git "git@github.com:/confirmedcode/AppleSharedLib.git" "d97c3091c0e48cff462f3ab7c995bebe1e31f742"
+git "git@github.com:/confirmedcode/AppleSharedLib.git" "cfe95972ce2333b2feabb34def00ecf605d353f6"
 github "CocoaLumberjack/CocoaLumberjack" "3.5.3"
 github "behrang/YamlSwift" "3.4.3"
 github "lexrus/MMDB-Swift" "0.3.0"

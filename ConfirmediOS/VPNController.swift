@@ -197,13 +197,13 @@ class VPNController: NSObject {
     }
     
     func updateProtocol() {
-        if SharedUtils.getActiveProtocol() == OpenVPN.protocolName {
-            ipsec.disconnectFromVPNOnly()
-            currentProtocol = ovpn
-        }
-        else {
+//        if SharedUtils.getActiveProtocol() == OpenVPN.protocolName {
+//            ipsec.disconnectFromVPNOnly()
+//            currentProtocol = ovpn
+//        }
+//        else {
             currentProtocol = ipsec
-        }
+//        }
         
         currentProtocol?.endpointForRegion(region: Utils.getSavedRegion()) //calling this method will choose a new region if unsupported (rare)
     }

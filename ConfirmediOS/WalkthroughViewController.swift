@@ -21,9 +21,9 @@ class WalkthroughViewController: BWWalkthroughViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.signinButton?.layer.borderColor = UIColor.tunnelsLightBlueColor.cgColor
-        self.signinButton?.layer.borderWidth = 1.0
-        
+//        self.signinButton?.layer.borderColor = UIColor.tunnelsLightBlueColor.cgColor
+//        self.signinButton?.layer.borderWidth = 1.0
+//
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.dismissOnboarding),

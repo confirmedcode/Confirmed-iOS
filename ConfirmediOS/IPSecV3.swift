@@ -33,12 +33,15 @@ class IPSecV3: NSObject, ConfirmedVPNProtocol {
             let p = NEVPNProtocolIKEv2()
             
             p.serverAddress = endpoint
+            DDLogInfo("Endpoint:  \(endpoint)")
             p.serverCertificateIssuerCommonName = Global.remoteIdentifier
             p.remoteIdentifier = Global.remoteIdentifier
+            DDLogInfo("Remote Identifier:  \(Global.remoteIdentifier)")
             
             p.certificateType = NEVPNIKEv2CertificateType.ECDSA256
             p.authenticationMethod = NEVPNIKEAuthenticationMethod.certificate
             p.localIdentifier = localId
+            DDLogInfo("Local Identifier:  \(localId)")
             p.useExtendedAuthentication = false
             p.disconnectOnSleep = false
             p.enablePFS = true

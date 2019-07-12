@@ -19,7 +19,7 @@ class SignInViewController: ConfirmedBaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        DDLogInfo("Height for button \(self.signinButton?.frame.height ?? 0)")
+        //DDLogInfo("Height for button \(self.signinButton?.frame.height ?? 0)")
         
     }
 
