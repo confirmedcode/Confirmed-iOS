@@ -377,14 +377,18 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
             if let daysSinceInstall = Calendar.current.dateComponents([.day], from: installDate, to: Date()).day {
                 print("Days since install \(daysSinceInstall)");
                 if (daysSinceInstall > 3) {
-                    SKStoreReviewController.requestReview();
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        SKStoreReviewController.requestReview();
+                    }
                 }
                 else {
                     let ratingCount = UserDefaults.standard.integer(forKey: "rating")
                     print("Rating Count: " + String(ratingCount));
                     UserDefaults.standard.set(ratingCount + 1, forKey: "rating");
                     if (ratingCount != 0 && ratingCount % 8 == 0) {
-                        SKStoreReviewController.requestReview();
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                            SKStoreReviewController.requestReview();
+                        }
                     }
                 }
             }

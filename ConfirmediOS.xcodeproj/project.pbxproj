@@ -1257,7 +1257,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Confirmed VPN/Pods-Confirmed VPN-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-Confirmed VPN/Pods-Confirmed VPN-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CNPPopupController/CNPPopupController.framework",
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
@@ -1302,7 +1302,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Confirmed VPN/Pods-Confirmed VPN-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Confirmed VPN/Pods-Confirmed VPN-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B6DDF4A7FAF8E1F9869C1C2F /* [CP] Check Pods Manifest.lock */ = {

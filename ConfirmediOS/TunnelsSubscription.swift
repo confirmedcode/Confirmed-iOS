@@ -196,28 +196,47 @@ class TunnelsSubscription: NSObject {
             switch result {
             case .success(let receiptData):
                 let encryptedReceipt = receiptData.base64EncodedString(options: [])
-                if encryptedReceipt != nil {
-                    userReceipt = encryptedReceipt
-                    Global.keychain[Global.kConfirmedReceiptKey] = userReceipt
-                    //print("Tunnels sub here \(Global.keychain[Global.kConfirmedReceiptKey])")
-                    if let email = Global.keychain[Global.kConfirmedEmail], let password =  Global.keychain[Global.kConfirmedPassword] {
-                        Auth.uploadNewReceipt(uploadReceiptCallback: {(_ status: Bool, _ reason: String, errorCode : Int) -> Void in
-                            //TODO: Error handling here?
-                        })
-                    }
-                    
+                userReceipt = encryptedReceipt
+                Global.keychain[Global.kConfirmedReceiptKey] = userReceipt
+                //print("Tunnels sub here \(Global.keychain[Global.kConfirmedReceiptKey])")
+                if let email = Global.keychain[Global.kConfirmedEmail], let password =  Global.keychain[Global.kConfirmedPassword] {
+                    Auth.uploadNewReceipt(uploadReceiptCallback: { _,_,_  in
+                        //TODO: Error handling here?
+                        Auth.clearCookies()
+                        Auth.getActiveSubscriptions { (hasActiveSubscription, error, errorMessage, json) in
+                            if hasActiveSubscription {
+                                TunnelsSubscription.isSubscribed = .Subscribed
+                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsIsSubscribed), object: nil)
+                                isSubscribed()
+                            }
+                            else {
+                                if error == Global.kInternetDownError || error == Global.kTooManyRequests {
+                                    //just need to notify user
+                                    NotificationCenter.post(name: .internetDownNotification)
+                                    isNotSubscribed()
+                                }
+                                else {
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsNotSubscribed), object: nil)
+                                    TunnelsSubscription.isSubscribed = .NotSubscribed
+                                    isNotSubscribed()
+                                }
+                            }
+                        }
+                    })
+                }
+                else {
                     Auth.clearCookies()
-                    Auth.getKey(callback: {(_ status: Bool, _ reason: String, errorCode : Int) -> Void in
-                        if status {
+                    Auth.getActiveSubscriptions { (hasActiveSubscription, error, errorMessage, json) in
+                        if hasActiveSubscription {
                             TunnelsSubscription.isSubscribed = .Subscribed
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsIsSubscribed), object: nil)
                             isSubscribed()
                         }
                         else {
-                            //some error
-                            if errorCode == Global.kInternetDownError || errorCode == Global.kTooManyRequests {
+                            if error == Global.kInternetDownError || error == Global.kTooManyRequests {
                                 //just need to notify user
                                 NotificationCenter.post(name: .internetDownNotification)
+                                isNotSubscribed()
                             }
                             else {
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsNotSubscribed), object: nil)
@@ -225,14 +244,9 @@ class TunnelsSubscription: NSObject {
                                 isNotSubscribed()
                             }
                         }
-                    })
+                    }
                 }
-                else {
-                    DDLogError("Decrypt failed (shouldn't happen)")
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsNotSubscribed), object: nil)
-                    TunnelsSubscription.isSubscribed = .NotSubscribed
-                    isNotSubscribed()
-                }
+                
             case .error(let error):
                 DDLogError("Fetch receipt failed: \(error)")
                 
@@ -256,8 +270,8 @@ class TunnelsSubscription: NSObject {
     static func isSubscribed(refreshITunesIfNeeded : Bool, isSubscribed: @escaping () -> Void, isNotSubscribed: @escaping () -> Void) -> Void {
         
         //try to sign in first, much faster response time/reliability
-        Auth.getKey(callback: {(_ status: Bool, _ reason: String, errorCode : Int) -> Void in
-            if status {
+        Auth.getActiveSubscriptions { (hasActiveSubscription, error, errorMessage, json) in
+            if hasActiveSubscription {
                 TunnelsSubscription.isSubscribed = .Subscribed
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsIsSubscribed), object: nil)
                 isSubscribed()
@@ -267,7 +281,7 @@ class TunnelsSubscription: NSObject {
                 //email is not confirmed, let them know
                 isSubscribedThroughiTunes(refreshITunesIfNeeded: refreshITunesIfNeeded, isSubscribed: { isSubscribed() }, isNotSubscribed: { isNotSubscribed() })
             }
-        })
+        }
     }
     
     static func purchaseTunnels(succeeded: @escaping () -> Void, errored: @escaping () -> Void) {

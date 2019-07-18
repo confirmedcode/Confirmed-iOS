@@ -4,46 +4,49 @@ use_frameworks!
 platform :ios, '11.0'
 
 target :'Confirmed VPN' do
-    pod 'ReachabilitySwift'
+    pod 'ReachabilitySwift', '4.1.0'
     pod 'SwiftMessages', '6.0.0'
-    pod 'PromiseKit'
-    pod 'PromiseKit/Alamofire', '~> 6.0'
+    pod 'PromiseKit', '6.7.0'
+    pod 'PromiseKit/Alamofire', '6.7.0'
     pod 'SwiftyStoreKit', '0.13.1'
     pod 'CNPPopupController'
     pod 'LGSideMenuController', '2.1.1'
-    pod 'Alamofire'
+    pod 'Alamofire', '4.5.1'
     pod 'SkyFloatingLabelTextField', '~> 3.0'
     pod 'TextFieldEffects'
-    pod 'KeychainAccess', '3.2.0'
+    pod 'KeychainAccess', '3.1.0'
     pod 'Segmentio'
-    pod 'NVActivityIndicatorView'
+    pod 'NVActivityIndicatorView', '4.7.0'
     pod 'CocoaLumberjack', '3.4.2'
     pod 'PopupDialog', '~> 0.9'
     pod 'TunnelKit', '1.4.0'
+    pod 'OpenSSL-Apple', '1.1.0i.2'
 end
 
 
 target :'Confirmed Tunnels' do
-    pod 'SwiftyUserDefaults'
-    pod 'PromiseKit'
-    pod 'PromiseKit/Alamofire', '~> 6.0'
+    pod 'SwiftyUserDefaults', '3.0.0'
+    pod 'PromiseKit', '6.7.0'
+    pod 'PromiseKit/Alamofire', '6.7.0'
     pod 'CocoaLumberjack', '3.4.2'
-    pod 'KeychainAccess', '3.2.0'
-    pod 'Alamofire'
+    pod 'KeychainAccess', '3.1.0'
+    pod 'Alamofire', '4.5.1'
     pod 'SwiftyStoreKit', '0.13.1'
-    pod 'ReachabilitySwift'
+    pod 'ReachabilitySwift', '4.1.0'
     pod 'TunnelKit', '1.4.0'
+    pod 'OpenSSL-Apple', '1.1.0i.2'
 end
 
 target :'Today' do
-    pod 'PromiseKit'
-    pod 'PromiseKit/Alamofire', '~> 6.0'
+    pod 'PromiseKit', '6.7.0'
+    pod 'PromiseKit/Alamofire', '6.7.0'
     pod 'SwiftyStoreKit', '0.13.1'
-    pod 'Alamofire'
-    pod 'KeychainAccess', '3.2.0'
+    pod 'Alamofire', '4.5.1'
+    pod 'KeychainAccess', '3.1.0'
     pod 'CocoaLumberjack', '3.4.2'
-    pod 'ReachabilitySwift'
+    pod 'ReachabilitySwift', '4.1.0'
     pod 'TunnelKit', '1.4.0'
+    pod 'OpenSSL-Apple', '1.1.0i.2'
 end
 
 post_install do |installer| 
