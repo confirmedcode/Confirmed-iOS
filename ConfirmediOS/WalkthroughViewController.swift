@@ -24,6 +24,10 @@ class WalkthroughViewController: BWWalkthroughViewController {
 //        self.signinButton?.layer.borderColor = UIColor.tunnelsLightBlueColor.cgColor
 //        self.signinButton?.layer.borderWidth = 1.0
 //
+        if #available(iOS 13.0, *) {
+            self.isModalInPresentation = true
+        }
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.dismissOnboarding),

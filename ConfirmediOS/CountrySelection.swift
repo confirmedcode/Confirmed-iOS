@@ -78,6 +78,7 @@ class CountrySelection: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         cell.textLabel?.textColor = UIColor.init(white: 0.25, alpha: 1.0)
         cell.imageView?.contentMode = .scaleToFill
+        cell.backgroundColor = UIColor.white
         
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor.tunnelsBlueColor

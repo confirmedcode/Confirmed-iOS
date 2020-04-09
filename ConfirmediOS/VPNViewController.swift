@@ -597,6 +597,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
 
     
     func sendSupportRequest() {
+        DDLogInfo("API VERSION: \(UserDefaults.standard.string(forKey: Global.kConfirmedAPIVersion))")
         if (MFMailComposeViewController.canSendMail()) {
             self.emailTeam()
         }

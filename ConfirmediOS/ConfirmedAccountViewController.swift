@@ -132,13 +132,17 @@ class ConfirmedAccountViewController: ConfirmedBaseViewController, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        let email = Global.keychain[Global.kConfirmedEmail]
-        let password = Global.keychain[Global.kConfirmedPassword]
-        
+//        let email = Global.keychain[Global.kConfirmedEmail]
+//        let password = Global.keychain[Global.kConfirmedPassword]
+//
         var totalSections = 3
         //show protocol switching for v3+
         if Global.isVersion(version: .v3API) {
