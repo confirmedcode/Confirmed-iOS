@@ -112,6 +112,7 @@ class Auth: NSObject {
     }
     
     public static func processPartnerCode() -> String? {
+        /*
         let pasteboard = UIPasteboard.general
         if let partnerCodeData = pasteboard.data(forPasteboardType: Global.kPartnerCodePasteboardType), let partnerCode = String.init(data: partnerCodeData, encoding: .utf8)
         {
@@ -130,7 +131,7 @@ class Auth: NSObject {
                 return output
             }
         }
-        
+        */
         return nil
     }
     

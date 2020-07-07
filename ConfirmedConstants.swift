@@ -199,7 +199,7 @@ class Global {
     static var kLastEnvironment = "lastEnvironment"
     static let kPlatformiOS = "ios"
     static let kPlatformMac = "mac"
-    static let kPartnerCodePasteboardType = "com.confirmed.tunnels.PartnerCode"
+    //static let kPartnerCodePasteboardType = "com.confirmed.tunnels.PartnerCode"
     static let kConfirmedUniquePartnerCode = "266347633"
     
     static let kConfirmedAPIVersion = "API-Version"
