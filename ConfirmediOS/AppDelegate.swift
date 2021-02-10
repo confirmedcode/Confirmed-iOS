@@ -19,7 +19,6 @@ import PopupDialog
 
 let fileLogger: DDFileLogger = DDFileLogger() // File Logger
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -28,11 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupLogging()
         application.registerForRemoteNotifications()
-        Global.sharedUserDefaults().synchronize()
-        Utils.chooseAPIVersion()
-        Auth.processPartnerCode()
-        //Auth.switchAPIVersion()
-        //Auth.clearCookies()
+        
+        // If V1 or V2, sign out and clear version.
+        if (UserDefaults.standard.string(forKey: kConfirmedAPIVersionDeprecated) == "v1") {
+            Auth.signoutUser()
+            UserDefaults.standard.set("v3", forKey: kConfirmedAPIVersionDeprecated)
+        }
         
         SFContentBlockerManager.reloadContentBlocker(
         withIdentifier: Global.contentBlockerBundleID) { (_ error: Error?) -> Void in

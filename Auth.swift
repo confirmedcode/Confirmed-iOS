@@ -58,33 +58,7 @@ class Auth: NSObject {
     static let cookieSemaphore = DispatchSemaphore(value: 1)
     
     //MARK: - COOKIE METHODS
-    /*
-     * switch API version
-     * primarily to cycle through deprecated API servers if primary one fails
-     * need to clear p12 & User ID as they are API specific
-     * when switching, always increases version of API & then reset (v1 -> v2 -> v3 -> v1)
-     */
-    public static func incrementAPIVersion() {
-        if Global.isVersion(version: .v1API) {
-            UserDefaults.standard.set(APIVersionType.v3API, forKey: Global.kConfirmedAPIVersion)
-            UserDefaults.standard.synchronize()
-        }
-        else {
-            UserDefaults.standard.set(APIVersionType.v1API, forKey: Global.kConfirmedAPIVersion)
-            UserDefaults.standard.synchronize()
-        }
-        
-        NotificationCenter.post(name: .switchingAPIVersions)
-        
-        //clear defaults in case of a version API
-        Global.keychain[Global.kConfirmedID] = nil
-        Global.keychain[Global.kConfirmedP12Key] = nil
-        let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: Global.vpnSavedRegionKey)
-        defaults.set(Global.vpnDomain, forKey: Global.kLastEnvironment)
-        defaults.synchronize()
-    }
-    
+
     /*
      * accept headers from /signin response
      * return true if cookie headers are there
@@ -111,30 +85,6 @@ class Auth: NSObject {
         return false
     }
     
-    public static func processPartnerCode() -> String? {
-        /*
-        let pasteboard = UIPasteboard.general
-        if let partnerCodeData = pasteboard.data(forPasteboardType: Global.kPartnerCodePasteboardType), let partnerCode = String.init(data: partnerCodeData, encoding: .utf8)
-        {
-            var components = partnerCode.split(separator: "-")
-            if components.count == 3 && components[0] == Global.kConfirmedUniquePartnerCode { //check for Confirmed unique prefix
-                Global.sharedUserDefaults().set(partnerCode, forKey: Global.kPartnerCodePasteboardType)
-                Global.sharedUserDefaults().synchronize()
-            }
-        }
-        
-        if let partnerCode = Global.sharedUserDefaults().value(forKey: Global.kPartnerCodePasteboardType) as? String {
-            var components = partnerCode.split(separator: "-")
-            if components.count == 3 && components[0] == Global.kConfirmedUniquePartnerCode { //check for Confirmed unique prefix
-                components.remove(at: 0)
-                let output = components.joined(separator: "-")
-                return output
-            }
-        }
-        */
-        return nil
-    }
-    
     /*
      * /signin for cookie only returns 200 on success
      * reject promise for any other, pass error up
@@ -147,9 +97,6 @@ class Auth: NSObject {
         Auth.clearCookies()
         
         var signinParams = parameters
-        if let partnerCode = processPartnerCode() {
-            signinParams["partner"] = partnerCode
-        }
         
         return Promise { seal in
             sessionManager.request(Global.signinURL, method: .post, parameters : signinParams, headers: headersForRequest()).responseJSON { response in
@@ -181,12 +128,6 @@ class Auth: NSObject {
                         }
                     }
                 case .failure(let error):
-                    
-                    if Global.isVersion(version: .v1API) && processCookiesForHeader(response: response) { //deprecated V1 does not return valid JSON, so catch false positive error case here
-                        seal.fulfill(true)
-                        return
-                    }
-                    
                     if error is AFError, let statusCode = (error as! AFError).responseCode {
                         seal.reject(NSError.init(domain: "Sign In Error", code: statusCode, userInfo: nil))
                     }
@@ -295,37 +236,8 @@ class Auth: NSObject {
                 return
             }
             
-            if email == nil || password == nil {
-                //reset to v3 version for receipt only as they are universal
-                UserDefaults.standard.set(APIVersionType.v3API, forKey: Global.kConfirmedAPIVersion)
-                UserDefaults.standard.synchronize()
-            }
-            
-            
             //try active API version first
             attemptAllAuthForVersion(email: email, password: password)
-                .recover { error -> Promise<Bool> in
-                    let eCode = (error as NSError).code
-                    if eCode == -1200 || eCode == -1001 || eCode == -1009 { //propagate bad Internet instead of switching API
-                        return Promise.init(error: NSError.init(domain: (error as NSError).domain, code: Global.kInternetDownError, userInfo: nil))
-                    }
-                    if eCode == Global.kEmailNotConfirmed && !Global.isVersion(version: .v1API) { //don't switch API version on e-mail not confirmed if on V2 (V1 deprecated so no longer confirming accounts)
-                        return Promise.init(error: NSError.init(domain: (error as NSError).domain, code: Global.kEmailNotConfirmed, userInfo: nil))
-                    }
-                    Auth.incrementAPIVersion()
-                    return attemptAllAuthForVersion(email: email, password: password)
-                }
-                .recover { error -> Promise<Bool> in
-                    let eCode = (error as NSError).code
-                    if eCode == -1200 || eCode == -1001 || eCode == -1009 { //propagate bad Internet instead of switching API
-                        return Promise.init(error: NSError.init(domain: (error as NSError).domain, code: Global.kInternetDownError, userInfo: nil))
-                    }
-                    if eCode == Global.kEmailNotConfirmed && !Global.isVersion(version: .v1API) { //don't switch API version on e-mail not confirmed if on V2 (V1 deprecated so no longer confirming accounts)
-                        return Promise.init(error: NSError.init(domain: (error as NSError).domain, code: Global.kEmailNotConfirmed, userInfo: nil))
-                    }
-                    Auth.incrementAPIVersion()
-                    return attemptAllAuthForVersion(email: email, password: password)
-                }
                 .done {_ in
                     Auth.cookieSemaphore.signal()
                     cookieCallback(true, 0)
@@ -351,12 +263,6 @@ class Auth: NSObject {
         if let cookies = cstorage?.cookies {
             for cookie in cookies {
                 if let timeUntilExpire = cookie.expiresDate?.timeIntervalSinceNow {
-                    if !Global.isVersion(version: .v3API) && UserDefaults.standard.bool(forKey: Global.kIsOnFinalDeprecatedV1V2) {
-                        if cookie.domain.contains("confirmedvpn.co") && timeUntilExpire > 120.0 {
-                            hasCookie = true
-                        }
-                    }
-                    
                     if cookie.domain.contains("confirmedvpn.com") && timeUntilExpire > 120.0 {
                         hasCookie = true
                     }
@@ -399,9 +305,6 @@ class Auth: NSObject {
     
     //MARK: - CREATE USER (macOS only)
     public static func createUser(email : String, password : String, passwordConfirmation : String, createUserCallback: @escaping (_ status: Bool, _ reason: String, _ errorCode: Int) -> Void) {
-        UserDefaults.standard.set(APIVersionType.v3API, forKey: Global.kConfirmedAPIVersion) //force upgrade to latest API version on create user
-        UserDefaults.standard.synchronize()
-        NotificationCenter.post(name: .switchingAPIVersions)
         
         if let result = Utils.validateCredentialFormat(email: email, password: password, passwordConfirmation: passwordConfirmation) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { //add delays to allow animation
@@ -453,10 +356,6 @@ class Auth: NSObject {
         let sessionManager = Alamofire.SessionManager.default
         sessionManager.retrier = CookieHandler()
         var parameters: Parameters = parametersForValues(authType: Global.kPlatformiOS, authReceipt: Global.keychain[Global.kConfirmedReceiptKey] as String!)
-        
-        if Global.isVersion(version: .v1API) {
-            parameters = parametersForValues(platform: Global.kPlatformiOS, receipt: Global.keychain[Global.kConfirmedReceiptKey] as String!)
-        }
         
         getCookie()
             .then { promise in
@@ -580,18 +479,11 @@ class Auth: NSObject {
                 
                 let resp = processServerResponse(data: response.data)
                 
-                if !Global.isVersion(version: APIVersionType.v3API) { //set for users who have the .co
-                    UserDefaults.standard.set(true, forKey: Global.kIsOnFinalDeprecatedV1V2)
-                    UserDefaults.standard.synchronize()
-                }
-                
                 if response.response?.statusCode == 200, let userB64 = resp.b64, let userID = resp.id {
                     NotificationCenter.default.post(name: .userSignedIn, object: nil)
                     Global.keychain[Global.kConfirmedP12Key] = userB64
                     Global.keychain[Global.kConfirmedID] = userID
-                    if Global.isVersion(version: .v3API) {
-                      Auth.extractP12Cert()
-                    }
+                    Auth.extractP12Cert()
                     signInError = Global.kNoError
                     callback(true, "", 0)
                 }
@@ -666,22 +558,15 @@ class Auth: NSObject {
      * clear v1/v2/v3 choice
      */
     public static func signoutUser() {
-        
-        for i in 1...3 {
             
-            Global.keychain[Global.kConfirmedEmail] = nil
-            Global.keychain[Global.kConfirmedID] = nil
-            Global.keychain[Global.kConfirmedP12Key] = nil
-            Global.keychain[Global.kConfirmedPassword] = nil
-            #if os(iOS)
-                Global.keychain[Global.kConfirmedReceiptKey] = nil
-                TunnelsSubscription.isSubscribed = .NotSubscribed
-            #endif
-            
-            Auth.incrementAPIVersion() //switch to clear other API as well
-        }
+        Global.keychain[Global.kConfirmedEmail] = nil
+        Global.keychain[Global.kConfirmedID] = nil
+        Global.keychain[Global.kConfirmedP12Key] = nil
+        Global.keychain[Global.kConfirmedPassword] = nil
+        Global.keychain[Global.kConfirmedReceiptKey] = nil
+        TunnelsSubscription.isSubscribed = .NotSubscribed
         
-        UserDefaults.standard.removeObject(forKey:Global.kConfirmedAPIVersion)
+        UserDefaults.standard.removeObject(forKey: kConfirmedAPIVersionDeprecated)
         if let defaults = UserDefaults(suiteName: SharedUtils.userDefaultsSuite) {
             defaults.removeObject(forKey: Utils.kActiveProtocol)
             defaults.synchronize()

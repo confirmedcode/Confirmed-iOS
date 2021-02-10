@@ -345,7 +345,7 @@ class SharedUtils: NSObject {
     }
     
     static func getVersionString() -> String {
-        return "v" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String) + "-" + Global.apiVersionPrefix()
+        return "v" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String) + "-v3"
     }
     
     static func setupRules() -> Array<String> {
@@ -439,25 +439,7 @@ class SharedUtils: NSObject {
     }
     
     static func getSource() -> String {
-        if Global.isVersion(version: .v1API) {
-            return "both"
-        }
         return ""
-    }
-    
-    /*
-     * decide API version if not chosen
-     * maximize V2 users
-     * base on whether last saved region exists, and whether it had a source ID
-     */
-    static func chooseAPIVersion() {
-        if UserDefaults.standard.string(forKey: Global.kConfirmedAPIVersion) == nil {
-            UserDefaults.standard.set(APIVersionType.v3API, forKey: Global.kConfirmedAPIVersion)
-            UserDefaults.standard.synchronize()
-            
-            NotificationCenter.post(name: .switchingAPIVersions)
-        }
-        
     }
     
     static func setActiveProtocol(activeProtocol : String) {

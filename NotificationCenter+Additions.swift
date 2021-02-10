@@ -23,7 +23,6 @@ extension Notification.Name {
     static let eulaPolicyAgreed = Notification.Name("EULA Policy Agreed")
     static let eulaPolicyDisagreed = Notification.Name("EULA Policy Disagreed")
     static let removeEULA = Notification.Name("Remove EULA")
-    static let switchingAPIVersions = Notification.Name("Switching API Versions")
     static let vpnStatusChanged = Notification.Name("ConfirmedVPNStatusChanged")
     
 }

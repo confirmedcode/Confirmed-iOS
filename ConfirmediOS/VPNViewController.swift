@@ -132,7 +132,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
         NotificationCenter.default.addObserver(self, selector: #selector(showContentBlocker), name: .showContentBlocker, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startVPN), name: .setupVPN, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showInternetDownNotification), name: .internetDownNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadServerEndpoints), name: .switchingAPIVersions, object: nil)
         
         NotificationCenter.default.addObserver(forName: .showTutorial, object: nil, queue: OperationQueue.main) { (notification) -> Void in
             self.showOnboarding()
@@ -180,10 +179,6 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
                 }
             }
         }
-    }
-    
-    @objc func reloadServerEndpoints(notification: Notification) {
-        countrySelection.loadEndpoints()
     }
     
     @objc func didSelectCountry(notification: Notification) {
@@ -597,7 +592,7 @@ class VPNViewController: ConfirmedBaseViewController, BWWalkthroughViewControlle
 
     
     func sendSupportRequest() {
-        DDLogInfo("API VERSION: \(UserDefaults.standard.string(forKey: Global.kConfirmedAPIVersion))")
+        DDLogInfo("API VERSION v3")
         if (MFMailComposeViewController.canSendMail()) {
             self.emailTeam()
         }

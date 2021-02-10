@@ -13,6 +13,8 @@ import Foundation
 import KeychainAccess
 import Reachability
 
+let kConfirmedAPIVersionDeprecated = "API-Version";
+
 class Global {
     static let reachability = Reachability()
     
@@ -21,39 +23,17 @@ class Global {
     static let forceProduction = true //switch on to force prod routes
     static var sourceID : String {
         get {
-            if Global.isVersion(version: .v1API) {
-                return ""
-            }
-            else {
-                return "-111818" //certificate chain
-            }
-        }
-    }
-    
-    static func isVersion(version : APIVersionType) -> Bool {
-        if UserDefaults.standard.string(forKey:Global.kConfirmedAPIVersion) == nil {
-            Utils.chooseAPIVersion()
-        }
-        if UserDefaults.standard.string(forKey:Global.kConfirmedAPIVersion) == version {
-            return true
-        }
-        else {
-            return false
+            return "-111818" //certificate chain
         }
     }
     
     static var vpnPassword : String {
         get {
-            if Global.isVersion(version: .v1API) {
-                return "trustwizardsjustplaying"
-            }
-            else {
-                #if os(iOS)
-                return ""
-                #else
-                return "rdar://12503102" //macOS requires a password here
-                #endif
-            }
+            #if os(iOS)
+            return ""
+            #else
+            return "rdar://12503102" //macOS requires a password here
+            #endif
         }
     }
     
@@ -67,52 +47,17 @@ class Global {
     }
     
     static var vpnDomain : String {
-        if Utils.isAppInProduction() {
-            if Global.isVersion(version: .v1API)  { //deprecated domain
-                if !UserDefaults.standard.bool(forKey: Global.kIsOnFinalDeprecatedV1V2) {
-                    Global.keychain[Global.kConfirmedP12Key] = nil
-                    Global.keychain[Global.kConfirmedID] = nil
-                }
-                return "confirmedvpn.co"
-            }
-            return "confirmedvpn.com"
-        }
-        else {
-            return "confirmedvpn.com" // enter staging url
-        }
+        return "confirmedvpn.com"
     }
     
     static var masterURL : String {
         get {
-            if Utils.isAppInProduction() {
-                //production routes
-                if Global.isVersion(version: .v1API) {
-                    if UserDefaults.standard.bool(forKey: Global.kIsOnFinalDeprecatedV1V2) {
-                        return "https://v1." + Global.vpnDomain
-                    }
-                    return "https://api." + Global.vpnDomain
-                }
-                else {
-                    return "https://v3." + Global.vpnDomain
-                }
-            }
-            else {
-                //staging/dev routes
-                if Global.isVersion(version: .v1API) {
-                    return "https://v1." + Global.vpnDomain
-                }
-                else {
-                    return "https://v3." + Global.vpnDomain
-                }
-            }
+            return "https://v3." + Global.vpnDomain
         }
     }
     
     static var createUserURL : String {
         get {
-            UserDefaults.standard.set(APIVersionType.v3API, forKey: Global.kConfirmedAPIVersion)
-            UserDefaults.standard.synchronize()
-            NotificationCenter.post(name: .switchingAPIVersions)
             return Global.masterURL + "/signup"
         }
     }
@@ -156,9 +101,6 @@ class Global {
     }
     static var addEmailToUserURL : String {
         get {
-            UserDefaults.standard.set(APIVersionType.v3API, forKey: Global.kConfirmedAPIVersion)
-            UserDefaults.standard.synchronize() //all new users are v3
-            NotificationCenter.post(name: .switchingAPIVersions)
             return Global.masterURL + "/convert-shadow-user"
         }
     }
@@ -179,30 +121,18 @@ class Global {
     static let kOpenTunnelRecord = "OpenTunnelRemotely"
     static let kCloseTunnelRecord = "CloseTunnelRemotely"
     
-    static func apiVersionPrefix() -> APIVersionType {
-        if Global.isVersion(version: .v1API) {
-            return APIVersionType.v1API
-        }
-        return APIVersionType.v3API
-    }
-    
-    static var vpnSavedRegionKey : String { get { return apiVersionPrefix() + "savedRegion-universal" }}
-    static var kConfirmedP12Key : String { get { return apiVersionPrefix() + "TunnelsP12" }}
-    static var kConfirmedPrivateKey : String { get { return apiVersionPrefix() + "TunnelsPrivateKey" }}
-    static var kConfirmedCACertKey : String { get { return apiVersionPrefix() + "TunnelsCACert" }}
-    static var kConfirmedCLCertKey : String { get { return apiVersionPrefix() + "TunneCLCert" }}
-    static var kConfirmedID : String { get { return apiVersionPrefix() + "TunnelsID" }}
-    static var kConfirmedEmail : String { get { return apiVersionPrefix() + "TunnelsEmail" }}
-    static var kConfirmedPassword : String { get { return apiVersionPrefix() + "TunnelsPassword" }}
-    static var kConfirmedReceiptKey : String { get { return apiVersionPrefix() + "TunnelsReceipt" }}
-    static var kPartnerCode = "PartnerCode"
+    static var vpnSavedRegionKey : String { get { return "v3savedRegion-universal" }}
+    static var kConfirmedP12Key : String { get { return "v3TunnelsP12" }}
+    static var kConfirmedPrivateKey : String { get { return "v3TunnelsPrivateKey" }}
+    static var kConfirmedCACertKey : String { get { return "v3TunnelsCACert" }}
+    static var kConfirmedCLCertKey : String { get { return "v3TunneCLCert" }}
+    static var kConfirmedID : String { get { return "v3TunnelsID" }}
+    static var kConfirmedEmail : String { get { return "v3TunnelsEmail" }}
+    static var kConfirmedPassword : String { get { return "v3TunnelsPassword" }}
+    static var kConfirmedReceiptKey : String { get { return "v3TunnelsReceipt" }}
     static var kLastEnvironment = "lastEnvironment"
     static let kPlatformiOS = "ios"
     static let kPlatformMac = "mac"
-    //static let kPartnerCodePasteboardType = "com.confirmed.tunnels.PartnerCode"
-    static let kConfirmedUniquePartnerCode = "266347633"
-    
-    static let kConfirmedAPIVersion = "API-Version"
     
     static let contentBlockerBundleID = "com.confirmed.tunnels.Confirmed-Blocker"
     
@@ -262,9 +192,6 @@ class Global {
     static let kConnectOnLaunch = "ConnectOnLaunch" //should VPN connect on launch
     static let kForceVPNOnMac = "ForceVPNOn" //prevents any traffic from processing outside the VPN (except whitelisted sites)
     
-    static let kIsOnFinalDeprecatedV1V2 = "IsOnFinalDeprecatedV1V2" //for old users, moving to v1/v2 on .co to keep launch environment clean
-    
-    
     static func sharedUserDefaults() -> UserDefaults {
         return UserDefaults(suiteName: Utils.userDefaultsSuite)!
     }
@@ -307,13 +234,6 @@ class Global {
     static let monthly = "Monthly".localized()
     static let annual = "Annual".localized()
     
-}
-
-public typealias APIVersionType = String
-
-extension APIVersionType {
-    static let v1API = "v1"
-    static let v3API = "v3"
 }
 
 #if os(iOS)
