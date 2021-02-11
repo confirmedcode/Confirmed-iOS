@@ -30,7 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // If V1 or V2, sign out and clear version.
         if (UserDefaults.standard.string(forKey: kConfirmedAPIVersionDeprecated) == "v1") {
+            Auth.clearCookies()
             Auth.signoutUser()
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsSubscription.TunnelsNotSubscribed), object: nil)
             UserDefaults.standard.set("v3", forKey: kConfirmedAPIVersionDeprecated)
         }
         

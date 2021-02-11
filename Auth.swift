@@ -555,24 +555,19 @@ class Auth: NSObject {
     /*
      * On signout, clear all keychain data, cookies, and turn VPN off
      * cycle through all API versions & clear data
-     * clear v1/v2/v3 choice
      */
     public static func signoutUser() {
-            
-        Global.keychain[Global.kConfirmedEmail] = nil
-        Global.keychain[Global.kConfirmedID] = nil
-        Global.keychain[Global.kConfirmedP12Key] = nil
-        Global.keychain[Global.kConfirmedPassword] = nil
-        Global.keychain[Global.kConfirmedReceiptKey] = nil
-        TunnelsSubscription.isSubscribed = .NotSubscribed
-        
-        UserDefaults.standard.removeObject(forKey: kConfirmedAPIVersionDeprecated)
-        if let defaults = UserDefaults(suiteName: SharedUtils.userDefaultsSuite) {
-            defaults.removeObject(forKey: Utils.kActiveProtocol)
-            defaults.synchronize()
+        try? Global.keychain.removeAll()
+        for d in UserDefaults(suiteName: SharedUtils.userDefaultsSuite)!.dictionaryRepresentation() {
+            UserDefaults(suiteName: SharedUtils.userDefaultsSuite)!.removeObject(forKey: d.key)
         }
+        for d in UserDefaults.standard.dictionaryRepresentation() {
+            UserDefaults.standard.removeObject(forKey: d.key)
+        }
+        TunnelsSubscription.isSubscribed = .NotSubscribed
         VPNController.shared.forceVPNOff()
         Auth.clearCookies()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: TunnelsSubscription.TunnelsNotSubscribed), object: nil)
     }
     
     /*
